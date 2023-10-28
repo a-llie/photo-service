@@ -146,7 +146,6 @@ def find_faces_in_folder(path):
     return faces
 
 def main():
-    st = time.time()
     path = './img/20230903_135847190_iOS.jpg'
 
     ref_faces = find_all_faces_in_image(path)
@@ -156,7 +155,7 @@ def main():
 
     result = find_all_matches(ref_face, compare_faces)
 
-    print(result)
+    print(f"Reference is in these photos {result}")
 
     
 main()
