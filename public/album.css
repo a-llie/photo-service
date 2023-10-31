@@ -1,0 +1,161 @@
+body {
+    font-family: Inter, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* background-image: url('dashboard.png'); */
+    border: 0px;
+    width: 100%;
+    text-align: center;
+    /* Center the background image */
+
+    /* Add position: relative to enable absolutely positioned elements inside the image (place text) */
+}
+
+.BlackButton{
+    font-size: 16px;
+    padding: 0.75rem 1.25rem;
+    background-color: #2D3648;
+    border-radius: 6px;
+    color: white;
+    margin-left: 10px; /* Add margin between the buttons */
+
+}
+
+.WhiteButton{
+    font-size: 16px;
+    padding: 0.75rem 1.25rem;
+    border-radius: 6px;
+    border: 2px solid #2D3648;
+    color: #2D3648;
+    background-color: white;
+}
+
+.titlebar{
+    border-bottom: 2px solid var(--wf-base-800, #2D3648);
+    padding: 3rem 0rem 0.5rem 0rem;
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 2rem;
+    white-space: nowrap; /* Prevent buttons from wrapping to the next line */
+
+}
+
+h1{
+    float:left;
+    margin-left: 10rem;
+}
+
+.dashboardcontentbuttons{
+    margin-top: 21px;
+    float:right;
+    padding-right: 10rem;
+}
+
+.albumcontainers{
+    height: 36.875rem;
+    padding: 0rem 6rem 3rem 6rem;
+}
+
+.contentcontainer{
+    width: 45%;
+    height: 36rem;
+    margin: 0rem 1rem 0rem 1rem;
+}
+
+#expandedimagecontainer{
+    border: 2px solid purple;
+    float: left;
+
+}
+#photoscontainer{
+    border: 2px solid blue;
+    float: right;
+}
+
+.containername{
+    text-align: center;
+    width: 100%;
+    padding: 0.5rem 0rem;
+    border-bottom: 2px solid #EEF1F4;
+
+}
+
+.containerphoto{    
+    position: relative;
+    padding: 1rem 0rem 1rem 0rem;
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+.containerphoto img{
+    width: 20rem;
+    height: 20rem;
+    border-radius: 0.5rem;
+    border: 5px solid var(--wf-base-800, #2D3648);
+    object-fit: cover;
+    display: inline-block;
+}
+
+.containerphoto button{
+    display: inline-block;
+}
+
+.buttoncontainer{
+    padding: 0.75rem 0;
+    border-top: 2px solid #EEF1F4;
+    text-align: center;
+}
+
+.buttoncontainer button{
+    display: inline-block;
+}
+
+
+.albumscontainer{
+    margin: 0rem 0.5rem;
+    display: inline-flex;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    justify-content: center;    
+} 
+
+.album img{
+    display: flex;
+    width: 9.5rem;
+    height: 9.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: 0.5rem;
+    border: 2px solid var(--wf-base-800, #2D3648);
+    object-fit: cover;
+
+}
+
+.album{
+    height: 13rem;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+#photoscontainer{
+    overflow: scroll;
+
+}
+
+.buttonoptions button{
+    margin: 0px;
+    width: 48%;
+}
+
+.sliders button{
+    margin: 0rem 1rem;
+}
+
+.sliders{
+    margin-bottom: 0.5rem;
+}
+
