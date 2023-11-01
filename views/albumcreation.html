@@ -16,7 +16,7 @@
     <script src="https://kit.fontawesome.com/58a61a6792.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script src="script.js"></script>
+    <script src="../public/scripts/albumcreation.js"></script>
 
     <!-- This is the sortable javascript module that allows reordering. -->
     <script type="module">
@@ -58,35 +58,35 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div id="photogallery">
-                            <div class="photo">
+                            <div class="photo" onclick="handleGalleryPhotoSelection(this)"> 
                                 <img src="../public/zyra.jpg">
                                 <p>Photo name</p>
                             </div>
-                            <div class="photo">
+                            <div class="photo" onclick="handleGalleryPhotoSelection(this)">
                                 <img src="../public/sona.jpg">
                                 <p>Photo name</p>
                             </div>
-                            <div class="photo">
+                            <div class="photo" onclick="handleGalleryPhotoSelection(this)">
                                 <img src="../public/brand.jpg">
                                 <p>Photo name</p>
                             </div>
-                            <div class="photo">
+                            <div class="photo" onclick="handleGalleryPhotoSelection(this)">
                                 <img src="../public/qiyana.jpg">
                                 <p>Photo name</p>
                             </div>
-                            <div class="photo">
+                            <div class="photo" onclick="handleGalleryPhotoSelection(this)">
                                 <img src="../public/zyra.jpg">
                                 <p>Photo name</p>
                             </div>
-                            <div class="photo">
+                            <div class="photo" onclick="handleGalleryPhotoSelection(this)">
                                 <img src="../public/sona.jpg">
                                 <p>Photo name</p>
                             </div>
-                            <div class="photo">
+                            <div class="photo" onclick="handleGalleryPhotoSelection(this)">
                                 <img src="../public/brand.jpg">
                                 <p>Photo name</p>
                             </div>
-                            <div class="photo">
+                            <div class="photo" onclick="handleGalleryPhotoSelection(this)">
                                 <img src="../public/qiyana.jpg">
                                 <p>Photo name</p>
                             </div>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Add images</button>
+                    <button type="button" class="btn btn-primary" onclick="addImagesRequest()">Add images</button>
                 </div>
             </div>
         </div>
@@ -116,13 +116,13 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div id="photogallery">
-                            <div class="photo">
+                            <div class="selected">
                                 <img src="../public/zyra.jpg">
                                 <p>Photo name</p>
                             </div>
                             <div class="photo">
                                 <img src="../public/sona.jpg">
-                                <p>Photo name</p>
+                                <p>sona.jpg</p>
                             </div>
                             <div class="photo">
                                 <img src="../public/brand.jpg">
@@ -342,5 +342,4 @@
         </div>
     </section>
 </body>
-<script src="../public/scripts/albumcreation.js"></script> 
 </html>

@@ -87,7 +87,13 @@ h1{
     height: 13rem;
     flex-shrink: 0;
     text-align: center;
-    padding: 0rem 1rem;
+    padding: 1rem 1rem;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+
+.photo p {
+    margin-bottom: 0px;
 }
 
 
@@ -191,4 +197,8 @@ li{
 .btn-share{
     width: 100%;
     margin-bottom: 1rem;
+}
+
+.selected {
+    border: 3px solid red;
 }

@@ -232,6 +232,7 @@ function render_signup(req,res,next)
 function render_albumCreation(req,res,next)
 {
     res.status(200).render("albumcreation");
+    //    res.status(200).render("albumcreation", {albumname: req.albumname, recommendedMovies: req.recommendedMovies, session: req.session, inList: req.inList}
 }
 
 
