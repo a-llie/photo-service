@@ -37,19 +37,22 @@
                 <div class="dashboardcontentbuttons">
                     <button class="WhiteButton">Edit Name</button>
                     <button class="WhiteButton" data-bs-toggle="modal" data-bs-target="#openGallery">Add Photos</button>
-                    <button class="WhiteButton">Remove Duplicates</button>
-                    <button class="BlackButton">Share</button>
+                    <button class="WhiteButton" data-bs-toggle="modal" data-bs-target="#removeDuplicates">Remove
+                        Duplicates</button>
+                    <button class="BlackButton" data-bs-toggle="modal" data-bs-target="#shareModal">Share</button>
                 </div>
             </div>
         </div>
     </section>
 
-       <!-- This is supposed to be the modal that opens when 'Add Photos' is clicked. It allows the user to select photos from their gallery. Right now the modal body is empty minus a container-fluid bootstrap div that has the beginnings of a grid in it. When the page loads this should be dynamically populated. -->
-       <div class="modal fade" id="openGallery" tabindex="-1" aria-labelledby="openGalleryLabel" aria-hidden="true">
+    <!-- This is supposed to be the modal that opens when 'Add Photos' is clicked. It allows the user to select photos from their gallery. Right now the modal body is empty minus a container-fluid bootstrap div that has the beginnings of a grid in it. When the page loads this should be dynamically populated. -->
+    <div class="modal fade" id="openGallery" tabindex="-1" aria-labelledby="openGalleryLabel" aria-hidden="true">
         <div class="modal-dialog  modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="openGalleryLabel">Welcome to your gallery <br><p>Select images and press save to add them to your album.</p></h1>
+                    <h1 class="modal-title fs-5" id="openGalleryLabel">Welcome to your gallery <br>
+                        <p>Select images and press save to add them to your album.</p>
+                    </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -90,15 +93,107 @@
                         </div>
                     </div>
                 </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Add images</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Add images</button>
+                </div>
             </div>
-        </div>
         </div>
     </div>
     </div>
 
+
+    <!-- This is supposed to be the modal that opens when 'Add Photos' is clicked. It allows the user to select photos from their gallery. Right now the modal body is empty minus a container-fluid bootstrap div that has the beginnings of a grid in it. When the page loads this should be dynamically populated. -->
+    <div class="modal fade" id="openGallery" tabindex="-1" aria-labelledby="openGalleryLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="openGalleryLabel">Welcome to your gallery <br>
+                        <p>Select images and press save to add them to your album.</p>
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div id="photogallery">
+                            <div class="photo">
+                                <img src="../public/zyra.jpg">
+                                <p>Photo name</p>
+                            </div>
+                            <div class="photo">
+                                <img src="../public/sona.jpg">
+                                <p>Photo name</p>
+                            </div>
+                            <div class="photo">
+                                <img src="../public/brand.jpg">
+                                <p>Photo name</p>
+                            </div>
+                            <div class="photo">
+                                <img src="../public/qiyana.jpg">
+                                <p>Photo name</p>
+                            </div>
+                            <div class="photo">
+                                <img src="../public/zyra.jpg">
+                                <p>Photo name</p>
+                            </div>
+                            <div class="photo">
+                                <img src="../public/sona.jpg">
+                                <p>Photo name</p>
+                            </div>
+                            <div class="photo">
+                                <img src="../public/brand.jpg">
+                                <p>Photo name</p>
+                            </div>
+                            <div class="photo">
+                                <img src="../public/qiyana.jpg">
+                                <p>Photo name</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Add images</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- This is the share modal. It needs javascript for the invite button to show a little success message like 'Invite Sent'. 
+        Copy link also needs 'Link copied.'. 
+        Download album can have 'Album download starting.'-->
+    <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="shareModalLabel">Share With Friends</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="input-group mb-3">
+                            <p> Invite a friend to collaborate and view this album by copying the link or inputting
+                                their email address. They'll be able to use their own gallery of photos to add to this
+                                album. <br><br> Want some extra ways to show off your perfect album? You can share this
+                                album by downloading the photos or by purchasing a formatted real-life copy.</p>
+                            <input type="text" class="form-control" placeholder="Recipient's email address"
+                                aria-label="Recipient's email address" aria-describedby="button-emailaddress">
+                            <button class="btn btn-outline-dark" type="button" id="button-emailaddress">Invite</button>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" disabled="disabled" class="form-control"
+                                placeholder="www.photoservice.com/album/1234567"
+                                aria-label="www.photoservice.com/album/1234567" aria-describedby="button-copylink">
+                            <button class="btn btn-dark" type="button" id="button-copylink">Copy Link</button>
+                        </div>
+                        <button class="btn btn-outline-dark btn-share" type="button">Download Album (.zip)</button>
+                        <button class="btn btn-outline-dark btn-share" type="button">Purchase Album</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <section id="albumcreation">

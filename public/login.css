@@ -87,9 +87,8 @@ background: var(--White, #FFF);
 }
 .sign-in-button {
     display: flex;
-    
     height: 4rem;
-    margin-top: 2em;
+    margin-top: 4em;
     justify-content: center;
     align-items: center;
     gap: 0.625rem;
@@ -119,7 +118,7 @@ padding-top: 1em;
 
 }
 
-.sign-up-link{
+.switch-mode-link{
     color: var(--Primary, #545F71);
 font-feature-settings: 'calt' off;
 /* Link */
@@ -143,4 +142,9 @@ font-weight: 500;
 line-height: 1.375rem; /* 137.5% */
 letter-spacing: -0.02rem;
 
+}
+
+a {
+
+    text-decoration: none;
 }
