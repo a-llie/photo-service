@@ -70,7 +70,7 @@ h1{
 }
 
 
-.album img{
+.photo img{
     display: inline-block;
     width: 9.5rem;
     height: 9.5rem;
@@ -83,7 +83,7 @@ h1{
 
 }
 
-.album{
+.photo{
     height: 13rem;
     flex-shrink: 0;
     text-align: center;
@@ -159,4 +159,27 @@ ul{
 
 li{
     list-style-type: none;
+}
+
+#photogallery{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-header{
+    flex-direction: column-reverse;
+
+}
+.modal-header h1{
+    text-decoration: underline;
+    display: inline-block;
+}
+
+.modal-header p{
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
 }
