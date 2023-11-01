@@ -5,8 +5,6 @@ const { stdin: input, stdout: output } = require('node:process');
 
 
 let albumns = {};
-const r1 = readline.createInterface({ input, output });
-inputLoop();
 
 function CreateNewAlbum(albumnName)
 {
@@ -15,8 +13,12 @@ function CreateNewAlbum(albumnName)
     albumns[albumnName].processedImages = new Set();
     albumns[albumnName].images = [];
     console.log("Albumn created");
+    return "Albumn created";
   }
-  else { console.log("[ERR] Albumn already exists"); }
+  else { 
+    console.log("[ERR] Albumn already exists"); 
+    return "[ERR] Albumn already exists";
+  }
 }
 
 async function AddImagesToAlbum(albumnName, imageList)
@@ -25,9 +27,28 @@ async function AddImagesToAlbum(albumnName, imageList)
     await processImages(albumns[albumnName], files).then(() => { console.log(albumns)});
 }
 
+function deleteImagesFromAlbum(albumnName, imageList)
+{
+  if (albumns[albumnName] == null) { console.log("[ERR] Albumn does not exist"); return "[ERR] Albumn does not exist"; }
+  for (let i = 0; i < imageList.length; i++) {
+    albumns[albumnName].processedImages.delete(imageList[i]);
+  }
+  for (let i = 0; i < albumns[albumnName].images.length; i++) {
+    if (imageList.includes(albumns[albumnName].images[i].pathOrigin))
+    {
+      albumns[albumnName].images.splice(i,1);
+      i--;
+    }
+  }
+}
+
 async function processImages(albumn,folder) {
   for (let i = 0; i < folder.length; i++) {
-    if (albumn.processedImages.has('./img/' + folder[i])) { console.log("already processed" + './img/' + folder[i]); continue; }
+    if (albumn.processedImages.has('./img/' + folder[i])) 
+    { 
+      console.log("already processed" + './img/' + folder[i]); 
+      continue; 
+    }
     await Jimp.read('./img/' + folder[i])
     .then((result) => {
       result.pathOrigin = './img/' + folder[i];
@@ -98,3 +119,5 @@ async function inputLoop(){
 }
 
 
+
+module.exports =  {albumns, CreateNewAlbum, AddImagesToAlbum, comparePhotosArray, comparePhotos, deleteImagesFromAlbum};

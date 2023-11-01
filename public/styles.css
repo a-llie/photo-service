@@ -1,291 +1,179 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .header {
-        width: 100%;
-        overflow: hidden;
-        position: sticky;
-        display: block;
-        top: 0px;
-        border-bottom: 3px solid #545F71;
-        font-size: 16px;
+      width: 100%;
+      overflow: hidden;
+      position: sticky;
+      display: block;
+      top: 0px;
+      border-bottom: 3px solid #545F71;
+      font-size: 16px;
 }
 
 .logo{
-    float:left;
-    margin: 24px 104px;
-    padding: 12px 40px;
-    background-color: #2D3648;
-    color: white;
-    text-align: left;
-    text-decoration: none;
-    display: block;
+  float:left;
+  margin: 24px 104px;
+  padding: 12px 40px;
+  background-color: #2D3648;
+  color: white;
+  text-align: left;
+  text-decoration: none;
+  display: block;
 }
 
-.header-links a{
-    margin: 24px 104px;
-    float: right;
-    display: block;
-    text-align: right;
-    text-decoration: none;
-    border-radius: 6px;
-    border: 2px solid var(--wf-base-800, #2D3648);
-    color: #2D3648;
-    padding: 12px 20px;
-    
+
+.BlackButton{
+font-size: 16px;
+padding: 0.75rem 1.25rem;
+background-color: #2D3648;
+border-radius: 6px;
+color: white;
+margin-left: 10px; /* Add margin between the buttons */
+
 }
+
+.WhiteButton{
+font-size: 16px;
+padding: 0.75rem 1.25rem;
+border-radius: 6px;
+border: 2px solid #2D3648;
+color: #2D3648;
+background-color: white;
+}
+
 
 .LandingPhoto{
-    margin: auto;
-    border-bottom: 3px solid #545F71;
-    text-align: center;
-    background-image: url('homepagephoto.jpg');
+  margin: auto;
+  border-bottom: 3px solid #545F71;
+  text-align: center;
+  background-image: url('homepagephoto.jpg');
 
-    height: 600px;
-    /* Center the background image */
-    background-position: center;
-    /* Scale and zoom in the image */
-    background-size: cover;
-    /* Add position: relative to enable absolutely positioned elements inside the image (place text) */
+  height: 600px;
+  /* Center the background image */
+  background-position: center;
+  /* Scale and zoom in the image */
+  background-size: cover;
+  /* Add position: relative to enable absolutely positioned elements inside the image (place text) */
 }
 
-.landingcontent{
-    display: inline-block;
-    margin: 0; 
-    margin-top: 10rem;
-     border: 2px solid var(--wf-base-800, #2D3648);
+h1{
+margin: 20px auto 0 auto;
+font-size: 5.625rem; /*100% is 16px. 90px/16=562.5% and 5.625 em */
+/*use em for dynamic. 1 em = 100% = 16px*/
+position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.top-container h2 {
+position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+ 
 }
 
 
+.top-container{
+position: relative;
+text-align: center;
+  background-color: #ff4c68;
+  height: 600px;
+  border-bottom: 3px solid #545F71;
+  color: white;
+}
 
+.buttoncontainer{
+position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
 
+.buttoncontainer button{
+margin: 5% 1.5% 5% 1.5%;
+}
 
+#carousel{
+text-align: center;
+}
 
+.testimonial-img{
+width: 70%;
+margin: 30px 20px;
+}
 
+/* Carousel */
+.carousel-item{
+padding: 7% 15%;
+}
 
-.content {
-    display: flex;
-    flex-direction: column;
-    width: 640px;
-    position: relative;
-    background-color: #545F71;
-    margin: 0 auto;
-    position: relative;
-  }
-  
-  .content .WF-heading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    flex: 0 0 auto;
-    background-color: white;
-  }
-  
-  .content .line {
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    height: 64px;
-    background-color: var(--wf-base600);
-    border-radius: 3px;
-    background-color: white;
+/* .carousel-control-next,
+.carousel-control-prev{
+  filter: invert(100%);
+} */
 
-  }
-  
-  .content .short-line {
-    display: flex;
-    height: 64px;
-    align-items: flex-start;
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    background-color: white;
+#carousel {
+color: white;
+background-color: #ef8172;
+padding: 3% 15%;
+text-align: center;
+}
 
-  }
-  
-  .content .blank {
-    align-self: stretch;
-    position: relative;
-    flex: 1;
-    flex-grow: 1;
-    border-radius: 3px;
-    background-color: white;
+#carousel h2{
+font-size: 1.5rem;
+overflow: wrap;
+width: 70%;
+display: inline-block;
+}
 
-  }
-  
-  .content .div {
-    position: relative;
-    flex: 1;
-    align-self: stretch;
-    flex-grow: 1;
-    background-color: var(--wf-base600);
-    border-radius: 3px 0px 0px 3px;
-    background-color: white;
+#features{
+background-color: white;
+padding: 7% 15%;
+text-align: center;
+position: relative;
+z-index:1;
+}
 
-  }
-  
-  .content .line-2 {
-    position: relative;
-    flex: 1;
-    align-self: stretch;
-    flex-grow: 1;
-    background-color: var(--wf-base600);
-    background-color: white;
+.row{
+padding: 4.5% ;
+}
 
-  }
-  
-  .content .line-3 {
-    position: relative;
-    flex: 1;
-    align-self: stretch;
-    flex-grow: 1;
-    background-color: var(--wf-base600);
-    border-radius: 0px 3px 3px 0px;
-    background-color: white;
+#AboutUs{
+padding: 3% 15%;
+text-align: center;
+}
 
-  }
-  
-  .content .WF-text-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    flex: 0 0 auto;
-    background-color: white;
+.container{
+background-color: #ff4c68;
+margin: 0px;
+max-width: 100%;
+padding: 0% 15%;
+}
 
-  }
-  
-  .content .text-base {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    flex: 0 0 auto;
-  }
-  
-  .content .line-4 {
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    height: 16px;
-    background-color: var(--wf-base500);
-    border-radius: 3px;
-  }
-  
-  .content .short-line-2 {
-    display: flex;
-    align-items: flex-start;
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    flex: 0 0 auto;
-  }
-  
-  .content .blank-2 {
-    height: 16px;
-    position: relative;
-    flex: 1;
-    flex-grow: 1;
-    border-radius: 3px;
-  }
-  
-  .content .line-5 {
-    position: relative;
-    flex: 1;
-    flex-grow: 1;
-    height: 16px;
-    background-color: var(--wf-base500);
-    border-radius: 3px 0px 0px 3px;
-  }
-  
-  .content .line-6 {
-    position: relative;
-    flex: 1;
-    flex-grow: 1;
-    height: 16px;
-    background-color: var(--wf-base500);
-    border-radius: 0px 3px 3px 0px;
-  }
-  
-  .content .button-stack {
-    display: inline-flex;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 16px;
-    position: relative;
-    flex: 0 0 auto;
-  }
-  
-  .content .WF-button-large {
-    flex-direction: column;
-    align-items: flex-start;
-    display: inline-flex;
-    position: relative;
-    flex: 0 0 auto;
-  }
-  
-  .content .WF-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 16px 24px;
-    position: relative;
-    flex: 0 0 auto;
-    background-color: var(--wf-base800);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  
-  .content .label {
-    margin-top: -1px;
-    color: var(--wf-basewhite);
-    position: relative;
-    width: fit-content;
-    font-family: "Inter-Bold", Helvetica;
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: -0.18px;
-    line-height: 24px;
-    white-space: nowrap;
-  }
-  
-  .content .WF-button-2 {
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 16px 24px;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 2px solid;
-    border-color: var(--wf-base800);
-    display: inline-flex;
-    position: relative;
-    flex: 0 0 auto;
-  }
-  
-  .content .text-wrapper {
-    margin-top: -2px;
-    color: var(--wf-base800);
-    position: relative;
-    width: fit-content;
-    font-family: "Inter-Bold", Helvetica;
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: -0.18px;
-    line-height: 24px;
-    white-space: nowrap;
-  }
-  
+.mb-4 {
+margin-bottom: 0rem!important;
+}
+
+.nav-item{
+color: white;
+border-radius: 6px;
+border: 2px solid white;
+margin: 2px;
+}
+
+.container a{
+color: white!important;
+}
+
+.whatweoffer-column i {
+padding-bottom: 15px;
+color:#ef8172
+}
