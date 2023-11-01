@@ -123,7 +123,7 @@ in:  path to find all face encodings in
 returns an array of face encodings  
 """
 def find_faces_in_folder(path):
-    image_paths = glob.glob(path + "/*")
+    image_paths = path
 
     faces = []
     i = 0
@@ -215,10 +215,18 @@ def main_deprecated():
 
 
 def main():
-    
-    print(sys.argv)
-    print("hello")
-    
+    saved_images_path = './saved_imgs'
+    if sys.argv[1] == "faces_in_image":
+        delete_saved_images(saved_images_path)
+        if not os.path.exists(saved_images_path):
+            os.makedirs(saved_images_path)
+        print(find_all_faces_in_image(sys.argv[2]))
+    if sys.argv[1] == "find_photos_of_person":
+        ref_face = create_face_encoding(sys.argv[2], sys.argv[3])
+        folder = sys.argv[4].split(',')
+        compare_faces = find_faces_in_folder(folder)
+        result = find_all_matches(ref_face, compare_faces)
+        print(list(result))
     
 
 main()

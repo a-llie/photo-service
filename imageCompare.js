@@ -24,7 +24,7 @@ function CreateNewAlbum(albumnName)
 async function AddImagesToAlbum(albumnName, imageList)
 {
     var files = fs.readdirSync(imageList);
-    await processImages(albumns[albumnName], files).then(() => { console.log(albumns)});
+    await processImages(albumns[albumnName], files).then(() => { console.log(albumns[albumnName].processedImages)});
 }
 
 function deleteImagesFromAlbum(albumnName, imageList)

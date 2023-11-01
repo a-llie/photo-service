@@ -8,21 +8,51 @@ let app = express();
 const spawn = require('child_process').spawn;
 const {albumns, CreateNewAlbum, AddImagesToAlbum, comparePhotosArray, comparePhotos, deleteImagesFromAlbum} = require('./imageCompare.js');
 
-function pythonRequest(req,res,next)
+function User_FindFacesInPhoto(req,res,next)
 {
-    var dataToSend;
-    // spawn new child process to call the python script
-    const python = spawn('python', ['imageCompare.py']);
+    let image = req.body.image;
+    if (image == null)
+    {
+        res.status(404).send("No image provided");
+        return;
+    }
+    var response;
+    const python = spawn('python', ['imageCompare.py', 'faces_in_image', image]);
+    python.stdout.on('data', function (data) {
+        console.log('Pipe data from python script ...');
+        response = data.toString();
+    });
+    python.on('close', (code) => {
+        console.log(`child process exited with code ${code}`);
+    // send data to browser
+    res.send(response)
+ });
+}
+
+function User_FindPhotosOfPerson(req,res,next)
+{
+    let image = req.body.image;
+    let source_image = req.body.source_image;
+    let folder = req.body.albumn;
+    var response;
+
+    if (image == null || source_image == null || folder == null)
+    {
+        res.status(404).send("Criteria not provided: image, source_image, albumn");
+        return;
+    }
+
+    let folder_images =Array.from(albumns[folder].processedImages);
+    const python = spawn('python', ['imageCompare.py', 'find_photos_of_person', image, source_image, folder_images]);
     // collect data from script
     python.stdout.on('data', function (data) {
         console.log('Pipe data from python script ...');
-        dataToSend = data.toString();
+        response = data.toString();
     });
-    // in close event we are sure that stream from child process is closed
     python.on('close', (code) => {
-    console.log(`child process close all stdio with code ${code}`);
+    console.log(`child process exited with code ${code}`);
     // send data to browser
-    res.send(dataToSend)
+    res.send(response)
  });
 }
 
@@ -33,7 +63,7 @@ function server(){
 
     app.use(session({
         secret:  'some secret here', 
-        cookie: {maxAge:500000},  //the cookie will expire in 500 seconds
+        cookie: {maxAge:500000},
         resave: true,
         saveUninitialized: true
     })); 
@@ -50,7 +80,8 @@ function server(){
     app.get("/dashboard",  render_dashboard);
     app.get("/albumnCreation",  render_albumnCreation);
 
-    app.get("/python", pythonRequest);
+    app.get("/faces", User_FindFacesInPhoto);
+    app.get("/personPhotos", User_FindPhotosOfPerson);
 
     app.post("/login", User_Login, render_dashboard);
     app.put("/albumn", User_CreateNewAlbum);
@@ -61,17 +92,6 @@ function server(){
     app.listen(port);
 
     console.log("Listening on port 3000");
-}
-
-
-function confirm_logged_in(req,res,next)
-{
-    if (req.session.loggedin) 
-    {   
-        next(); 
-        return;
-    } 
-    res.redirect("/login");
 }
 
 function User_Login(req,res,next)
