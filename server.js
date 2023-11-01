@@ -6,7 +6,7 @@ const port = 3000;
 var bodyParser = require('body-parser');
 let app = express();
 const spawn = require('child_process').spawn;
-const {albumns, CreateNewAlbum, AddImagesToAlbum, comparePhotosArray, comparePhotos, deleteImagesFromAlbum} = require('./imageCompare.js');
+const {albums, CreateNewAlbum, AddImagesToAlbum, comparePhotosArray, comparePhotos, deleteImagesFromAlbum} = require('./imageCompare.js');
 
 function User_FindFacesInPhoto(req,res,next)
 {
@@ -33,16 +33,16 @@ function User_FindPhotosOfPerson(req,res,next)
 {
     let image = req.body.image;
     let source_image = req.body.source_image;
-    let folder = req.body.albumn;
+    let folder = req.body.album;
     var response;
 
     if (image == null || source_image == null || folder == null)
     {
-        res.status(404).send("Criteria not provided: image, source_image, albumn");
+        res.status(404).send("Criteria not provided: image, source_image, album");
         return;
     }
 
-    let folder_images =Array.from(albumns[folder].processedImages);
+    let folder_images =Array.from(albums[folder].processedImages);
     const python = spawn('python', ['imageCompare.py', 'find_photos_of_person', image, source_image, folder_images]);
     // collect data from script
     python.stdout.on('data', function (data) {
@@ -78,17 +78,18 @@ function server(){
     app.get("/login", render_login);
     app.get("/signup", render_signup);
     app.get("/dashboard",  render_dashboard);
-    app.get("/albumnCreation",  render_albumnCreation);
+    app.get("/album/:albumName",  render_album);
+    app.get("/albumCreation",  render_albumCreation);
     app.get("/duplicates", User_FindDuplicates);
 
     app.get("/faces", User_FindFacesInPhoto);
     app.get("/personPhotos", User_FindPhotosOfPerson);
 
     app.post("/login", User_Login, render_dashboard);
-    app.put("/albumn", User_CreateNewAlbum);
-    app.post("/albumn", User_AddImagesToAlbum);
+    app.put("/album", User_CreateNewAlbum);
+    app.post("/album", User_AddImagesToAlbum);
     
-    app.delete("/albumn", User_DeleteImages, images_delete_response);
+    app.delete("/album", User_DeleteImages, images_delete_response);
 
     app.listen(port);
 
@@ -124,29 +125,29 @@ function User_CreateNewAlbum(req,res,next)
         res.redirect("/login");
         return;
     }
-    //options: "Albumn created, Albumn already exists"
-    if (req.body.albumnName == null) 
+    //options: "album created, album already exists"
+    if (req.body.albumName == null) 
     { 
-        res.status(404).send("No albumn name provided"); 
+        res.status(404).send("No album name provided"); 
         return; 
     }
 
-    result =  CreateNewAlbum(req.body.albumnName);
+    result =  CreateNewAlbum(req.body.albumName);
 
-    if (result == "[ERR] Albumn already exists")
+    if (result == "[ERR] album already exists")
     {
-        res.status(404).send("Albumn already exists");
+        res.status(404).send("album already exists");
     }
     else
     {
-        res.status(200).send("Albumn created");
+        res.status(200).send("album created");
     
     }
 }
 
 async function User_AddImagesToAlbum(req,res,next)
 {
-    if (req.body.albumnName == null) 
+    if (req.body.albumName == null) 
     { 
         res.status(404).send("No album provided"); 
         return; 
@@ -158,29 +159,29 @@ async function User_AddImagesToAlbum(req,res,next)
         return; 
     }
     
-    result =  await AddImagesToAlbum(req.body.albumnName, req.body.images);
+    result =  await AddImagesToAlbum(req.body.albumName, req.body.images);
     res.status(200).send("Images Added");
     
 }
 
 function User_FindDuplicates(req,res,next)
 {
-    if (req.body.albumnName == null) 
+    if (req.body.albumName == null) 
     { 
-        res.status(404).send("No albumn name provided"); 
+        res.status(404).send("No album name provided"); 
         return; 
     }
-    comparePhotosArray(albumns[req.body.albumnName].images);
+    comparePhotosArray(albums[req.body.albumName].images);
 
     console.log("Duplicate groups: ");
     let duplicates = [];
-    for (let i = 0; i < albumns[req.body.albumnName].images.length; i++) {
-        if (albumns[req.body.albumnName].images[i].duplicates.size == 0) continue;
+    for (let i = 0; i < albums[req.body.albumName].images.length; i++) {
+        if (albums[req.body.albumName].images[i].duplicates.size == 0) continue;
         console.log("\n");
-        console.log(albumns[req.body.albumnName].images[i].pathOrigin);
+        console.log(albums[req.body.albumName].images[i].pathOrigin);
         let dupes_group = [];
-        dupes_group.push(albumns[req.body.albumnName].images[i].pathOrigin);
-        for (const el of albumns[req.body.albumnName].images[i].duplicates) 
+        dupes_group.push(albums[req.body.albumName].images[i].pathOrigin);
+        for (const el of albums[req.body.albumName].images[i].duplicates) 
         {
             console.log(el);
             dupes_group.push(el);
@@ -192,19 +193,17 @@ function User_FindDuplicates(req,res,next)
 
 function User_DeleteImages(req,res,next)
 {
-    if (req.body.albumnName == null) 
+    if (req.body.albumName == null) 
     { 
-        res.status(404).send("No albumn name provided"); 
+        res.status(404).send("No album name provided"); 
         return; 
     }
     if (req.body.images == null) 
     { 
-        res.status(404).send("No albumn name provided"); 
-        return; 
+        res.status(404).send("No images provided");
     }
-    //let delete_images = JSON.parse(req.body.images);
-    console.log(req.body.albumnName);
-    result = deleteImagesFromAlbum(req.body.albumnName, req.body.images);
+    deleteImagesFromAlbum(req.body.albumName, req.body.images);
+    console.log(albums[req.body.albumName].processedImages);
     next();
 }
 
@@ -230,17 +229,29 @@ function render_signup(req,res,next)
     res.status(200).render("signup");
 }
 
-function render_albumnCreation(req,res,next)
+function render_albumCreation(req,res,next)
 {
-    res.status(200).render("albumncreation");
+    res.status(200).render("albumcreation");
 }
 
 
-function postData(req,res,next) {
-    $.ajax({
-        type: "POST",
-        url: "./imageCompare.py",
-        data: { param: input },
-        success: callbackFunc
-    });
+function render_album(req,res,next)
+{
+    if (!req.session.loggedin) 
+    {
+        res.redirect("/login");
+        return;
+    }
+    if (albums[req.params.albumName] == null)
+    {
+        res.status(404).send("Album does not exist");
+        return;
+    }
+    if (req.headers.accept === "application/json")
+    {
+        res.status(200).send(albums[req.params.albumName].processedImages);
+        console.log(albums[req.params.albumName].processedImages);
+        return;
+    }
+    res.status(200).render("album", {album : albums[req.params.albumName]});
 }

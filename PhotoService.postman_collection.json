@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8af7da3b-1d1b-46c2-b658-4a6d45beaf87",
+		"_postman_id": "399296d5-8023-4b17-8eec-0a0537870c2d",
 		"name": "PhotoService",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28542164"
@@ -38,13 +38,13 @@
 			"response": []
 		},
 		{
-			"name": "Albumn",
+			"name": "album",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"albumnName\" : \"images\"}",
+					"raw": "{\"albumName\" : \"images\"}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -52,7 +52,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:3000/albumn",
+					"raw": "http://127.0.0.1:3000/album",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -62,20 +62,20 @@
 					],
 					"port": "3000",
 					"path": [
-						"albumn"
+						"album"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Albumn",
+			"name": "album",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"albumnName\" : \"images\", \"images\" : \"./img\" }",
+					"raw": "{\"albumName\" : \"images\", \"images\" : [\r\n        \"./img/0.jpg\",\r\n        \"./img/1.jpg\",\r\n        \"./img/2.jpg\",\r\n        \"./img/3.JPEG\",\r\n        \"./img/4.JPEG\",\r\n        \"./img/5.jpg\",\r\n        \"./img/6.jpg\",\r\n        \"./img/7.jpg\",\r\n        \"./img/8.jpg\",\r\n        \"./img/9.jpg\",\r\n        \"./img/9 copy.jpg\"\r\n    ] }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -83,7 +83,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:3000/albumn",
+					"raw": "http://127.0.0.1:3000/album",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -93,7 +93,7 @@
 					],
 					"port": "3000",
 					"path": [
-						"albumn"
+						"album"
 					]
 				}
 			},
@@ -109,7 +109,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"image\" : \"./saved_imgs/ref_img_0.jpg\", \"source_image\" : \"./img/4.JPEG\", \"albumn\" : \"images\" }",
+					"raw": "{\"image\" : \"./saved_imgs/ref_img_0.jpg\", \"source_image\" : \"./img/4.JPEG\", \"album\" : \"images\" }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -143,7 +143,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"albumnName\" : \"images\"}",
+					"raw": "{\"albumName\" : \"images\"}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -162,6 +162,66 @@
 					"port": "3000",
 					"path": [
 						"duplicates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AlbumPhotos",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"albumName\" : \"images\", \"images\" : [\r\n        \"./img/1.jpg\",\r\n        \"./img/2.jpg\"\r\n    ] }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/album",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"album"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Album",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:3000/album/images",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"album",
+						"images"
 					]
 				}
 			},

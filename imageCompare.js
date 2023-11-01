@@ -4,58 +4,59 @@ const readline = require('node:readline');
 const { stdin: input, stdout: output } = require('node:process');
 
 
-let albumns = {};
+let albums = {};
+// const r1 = readline.createInterface({ input, output });
+// inputLoop();
 
-function CreateNewAlbum(albumnName)
+function CreateNewAlbum(albumName)
 {
-  if (albumns[albumnName] == null) { 
-    albumns[albumnName] = {}; 
-    albumns[albumnName].processedImages = new Set();
-    albumns[albumnName].images = [];
-    console.log("Albumn created");
-    return "Albumn created";
+  if (albums[albumName] == null) { 
+    albums[albumName] = {}; 
+    albums[albumName].processedImages = new Set();
+    albums[albumName].images = [];
+    console.log("album created");
+    return "album created";
   }
   else { 
-    console.log("[ERR] Albumn already exists"); 
-    return "[ERR] Albumn already exists";
+    console.log("[ERR] album already exists"); 
+    return "[ERR] album already exists";
   }
 }
 
-async function AddImagesToAlbum(albumnName, imageList)
+async function AddImagesToAlbum(albumName, files)
 {
-    var files = fs.readdirSync(imageList);
-    await processImages(albumns[albumnName], files).then(() => { console.log(albumns[albumnName].processedImages)});
+    await processImages(albums[albumName], files).then(() => { console.log(albums[albumName].processedImages)});
 }
 
-function deleteImagesFromAlbum(albumnName, imageList)
+function deleteImagesFromAlbum(albumName, imageList)
 {
-  if (albumns[albumnName] == null) { console.log("[ERR] Albumn does not exist"); return "[ERR] Albumn does not exist"; }
+  if (albums[albumName] == null) { console.log("[ERR] album does not exist"); return "[ERR] album does not exist"; }
   for (let i = 0; i < imageList.length; i++) {
-    albumns[albumnName].processedImages.delete(imageList[i]);
+    albums[albumName].processedImages.delete(imageList[i]);
   }
-  for (let i = 0; i < albumns[albumnName].images.length; i++) {
-    if (imageList.includes(albumns[albumnName].images[i].pathOrigin))
+  for (let i = 0; i < albums[albumName].images.length; i++) {
+    if (imageList.includes(albums[albumName].images[i].pathOrigin))
     {
-      albumns[albumnName].images.splice(i,1);
+      albums[albumName].images.splice(i,1);
       i--;
     }
   }
 }
 
-async function processImages(albumn,folder) {
+async function processImages(album,folder) {
   for (let i = 0; i < folder.length; i++) {
-    if (albumn.processedImages.has('./img/' + folder[i])) 
+    if (album.processedImages.has(folder[i])) 
     { 
-      console.log("already processed" + './img/' + folder[i]); 
+      console.log("already processed" +  folder[i]); 
       continue; 
     }
-    await Jimp.read('./img/' + folder[i])
+    await Jimp.read(folder[i])
     .then((result) => {
-      result.pathOrigin = './img/' + folder[i];
+      result.pathOrigin = folder[i];
       result.duplicates = new Set();
       result.isDuplicate = false;
-      albumn.processedImages.add(result.pathOrigin);
-      albumn.images.push(result
+      album.processedImages.add(result.pathOrigin);
+      album.images.push(result
       .resize(512, 512))
     })
     .catch((err) => {
@@ -87,31 +88,31 @@ async function comparePhotos(img1, img2)
 async function inputLoop(){
   r1.question("\nUse: \n  'create'  -> create new album \n  'add'     -> add images to album\n  'compare' -> find duplicates in album\n\n>> ", answer => { 
     if (answer == 'create'){
-      r1.question("Albumn Name: ", albumnName => {
-        CreateNewAlbum(albumnName);
+      r1.question("album Name: ", albumName => {
+        CreateNewAlbum(albumName);
         inputLoop();
       });
     }
     else if (answer == 'add'){
-        r1.question("Albumn Name: >> ", albumnName => {
+        r1.question("album Name: >> ", albumName => {
             r1.question("Images folder: >> ", images => {
-              AddImagesToAlbum(albumnName, images).then(() => { inputLoop(); });
+              AddImagesToAlbum(albumName, images).then(() => { inputLoop(); });
               
             });
         });
       }
       else if (answer == 'compare'){
-        r1.question("Albumn Name: >> ", albumnName => {
-          comparePhotosArray(albumns[albumnName].images);
+        r1.question("album Name: >> ", albumName => {
+          comparePhotosArray(albums[albumName].images);
           console.log("Duplicate groups: ");
           let duplicates = [];
-          for (let i = 0; i < albumns[albumnName].images.length; i++) {
-            if (albumns[albumnName].images[i].duplicates.size == 0) continue;
+          for (let i = 0; i < albums[albumName].images.length; i++) {
+            if (albums[albumName].images[i].duplicates.size == 0) continue;
             console.log("\n");
-            console.log(albumns[albumnName].images[i].pathOrigin);
+            console.log(albums[albumName].images[i].pathOrigin);
             let dupes_group = [];
-            dupes_group.push(albumns[albumnName].images[i].pathOrigin);
-            for (const el of albumns[albumnName].images[i].duplicates) 
+            dupes_group.push(albums[albumName].images[i].pathOrigin);
+            for (const el of albums[albumName].images[i].duplicates) 
             {
               console.log(el);
               dupes_group.push(el);
@@ -127,4 +128,4 @@ async function inputLoop(){
 
 
 
-module.exports =  {albumns, CreateNewAlbum, AddImagesToAlbum, comparePhotosArray, comparePhotos, deleteImagesFromAlbum};
+module.exports =  {albums, CreateNewAlbum, AddImagesToAlbum, comparePhotosArray, comparePhotos, deleteImagesFromAlbum};
