@@ -35,43 +35,18 @@ body {
     padding: 3rem 0rem 0.5rem 0rem;
     width: 100%;
     display: inline-block;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     white-space: nowrap; /* Prevent buttons from wrapping to the next line */
 
 }
 
 h1{
     float:left;
-    margin-left: 10rem;
 }
 
 .dashboardcontentbuttons{
-    margin-top: 21px;
     float:right;
-    padding-right: 10rem;
 }
-
-.albumcontainers{
-    height: 36.875rem;
-    padding: 0rem 6rem 3rem 6rem;
-}
-
-.contentcontainer{
-    width: 45%;
-    height: 36rem;
-    margin: 0rem 1rem 0rem 1rem;
-}
-
-#expandedimagecontainer{
-    border: 2px solid purple;
-    float: left;
-
-}
-#photoscontainer{
-    border: 2px solid blue;
-    float: right;
-}
-
 .containername{
     text-align: center;
     width: 100%;
@@ -80,50 +55,23 @@ h1{
 
 }
 
-.containerphoto{    
-    position: relative;
-    padding: 1rem 0rem 1rem 0rem;
-    text-align: center;
-    vertical-align: middle;
-
-}
-
-.containerphoto img{
-    width: 20rem;
-    height: 20rem;
-    border-radius: 0.5rem;
-    border: 5px solid var(--wf-base-800, #2D3648);
-    object-fit: cover;
-    display: inline-block;
-}
-
-.containerphoto button{
-    display: inline-block;
-}
-
 .buttoncontainer{
     padding: 0.75rem 0;
     border-top: 2px solid #EEF1F4;
     text-align: center;
+    position: relative;
+    bottom: 0;
 }
 
 .buttoncontainer button{
     display: inline-block;
+    position: relative;
+    bottom: 0;
 }
 
 
-.albumscontainer{
-    margin: 0rem 0.5rem;
-    display: inline-flex;
-    align-items: flex-start;
-    align-content: flex-start;
-    flex-wrap: wrap;
-    gap: 1rem 2rem;
-    justify-content: center;    
-} 
-
-.album img{
-    display: flex;
+.photo img{
+    display: inline-block;
     width: 9.5rem;
     height: 9.5rem;
     flex-direction: column;
@@ -135,27 +83,112 @@ h1{
 
 }
 
-.album{
+.photo{
     height: 13rem;
     flex-shrink: 0;
     text-align: center;
+    padding: 0rem 1rem;
 }
 
-#photoscontainer{
-    overflow: scroll;
-
-}
 
 .buttonoptions button{
     margin: 0px;
     width: 48%;
 }
 
-.sliders button{
-    margin: 0rem 1rem;
+
+
+#Titlebar .container-fluid{
+    padding: 3% 15%;
 }
 
-.sliders{
-    margin-bottom: 0.5rem;
+#albumcreation{
+    padding: 0rem 10rem 3rem 10rem;
 }
 
+
+#albumcreationcontainers{
+    gap: 1rem!important;
+    grid-template-columns: 1fr 1fr;
+}
+
+.testimonial-img{
+    object-fit: cover;
+    width: 45%;
+    border-radius: 0.5rem;
+    border: 5px solid var(--wf-base-800, #2D3648);
+    margin-bottom: 10px;
+}
+
+.carousel-control-next,
+.carousel-control-prev{
+    filter: invert(100%);
+}
+
+#carousel{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+#container1, #container2{
+    border: 1px solid black;
+    padding: 1rem 1rem 1rem 1rem;
+    height: 615px;
+}
+
+
+
+#albumname{
+    margin-bottom: 2rem;
+}
+
+#container2{
+    overflow: scroll;
+}
+
+ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+li{
+    list-style-type: none;
+}
+
+#photogallery{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-header{
+    flex-direction: column-reverse;
+
+}
+.modal-header h1{
+    text-decoration: underline;
+    display: inline-block;
+}
+
+.modal-header p{
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.modal-body p{
+    text-align: left;
+}
+
+.btn-share{
+    width: 100%;
+    margin-bottom: 1rem;
+}

@@ -5,8 +5,56 @@ const fs = require('fs');
 const port = 3000;
 var bodyParser = require('body-parser');
 let app = express();
+const spawn = require('child_process').spawn;
 const {albumns, CreateNewAlbum, AddImagesToAlbum, comparePhotosArray, comparePhotos, deleteImagesFromAlbum} = require('./imageCompare.js');
-let logged_in = false;
+
+function User_FindFacesInPhoto(req,res,next)
+{
+    let image = req.body.image;
+    if (image == null)
+    {
+        res.status(404).send("No image provided");
+        return;
+    }
+    var response;
+    const python = spawn('python', ['imageCompare.py', 'faces_in_image', image]);
+    python.stdout.on('data', function (data) {
+        console.log('Pipe data from python script ...');
+        response = data.toString();
+    });
+    python.on('close', (code) => {
+        console.log(`child process exited with code ${code}`);
+    // send data to browser
+    res.send(response)
+ });
+}
+
+function User_FindPhotosOfPerson(req,res,next)
+{
+    let image = req.body.image;
+    let source_image = req.body.source_image;
+    let folder = req.body.albumn;
+    var response;
+
+    if (image == null || source_image == null || folder == null)
+    {
+        res.status(404).send("Criteria not provided: image, source_image, albumn");
+        return;
+    }
+
+    let folder_images =Array.from(albumns[folder].processedImages);
+    const python = spawn('python', ['imageCompare.py', 'find_photos_of_person', image, source_image, folder_images]);
+    // collect data from script
+    python.stdout.on('data', function (data) {
+        console.log('Pipe data from python script ...');
+        response = data.toString();
+    });
+    python.on('close', (code) => {
+    console.log(`child process exited with code ${code}`);
+    // send data to browser
+    res.send(response)
+ });
+}
 
 
 server();
@@ -15,12 +63,11 @@ function server(){
 
     app.use(session({
         secret:  'some secret here', 
-        cookie: {maxAge:500000},  //the cookie will expire in 500 seconds
+        cookie: {maxAge:500000},
         resave: true,
         saveUninitialized: true
     })); 
     
-
     app.set("view engine", "pug");
     app.use(express.static('public'));
     app.use(express.json());
@@ -32,27 +79,20 @@ function server(){
     app.get("/signup", render_signup);
     app.get("/dashboard",  render_dashboard);
     app.get("/albumnCreation",  render_albumnCreation);
+    app.get("/duplicates", User_FindDuplicates);
+
+    app.get("/faces", User_FindFacesInPhoto);
+    app.get("/personPhotos", User_FindPhotosOfPerson);
 
     app.post("/login", User_Login, render_dashboard);
     app.put("/albumn", User_CreateNewAlbum);
     app.post("/albumn", User_AddImagesToAlbum);
-    app.delete("/duplicates", User_FindDuplicates);
+    
     app.delete("/albumn", User_DeleteImages, images_delete_response);
 
     app.listen(port);
 
     console.log("Listening on port 3000");
-}
-
-
-function confirm_logged_in(req,res,next)
-{
-    if (req.session.loggedin) 
-    {   
-        next(); 
-        return;
-    } 
-    res.redirect("/login");
 }
 
 function User_Login(req,res,next)
@@ -130,6 +170,24 @@ function User_FindDuplicates(req,res,next)
         res.status(404).send("No albumn name provided"); 
         return; 
     }
+    comparePhotosArray(albumns[req.body.albumnName].images);
+
+    console.log("Duplicate groups: ");
+    let duplicates = [];
+    for (let i = 0; i < albumns[req.body.albumnName].images.length; i++) {
+        if (albumns[req.body.albumnName].images[i].duplicates.size == 0) continue;
+        console.log("\n");
+        console.log(albumns[req.body.albumnName].images[i].pathOrigin);
+        let dupes_group = [];
+        dupes_group.push(albumns[req.body.albumnName].images[i].pathOrigin);
+        for (const el of albumns[req.body.albumnName].images[i].duplicates) 
+        {
+            console.log(el);
+            dupes_group.push(el);
+        }
+        duplicates.push(dupes_group);
+    }
+      res.send(duplicates);
 }
 
 function User_DeleteImages(req,res,next)
@@ -177,3 +235,12 @@ function render_albumnCreation(req,res,next)
     res.status(200).render("albumncreation");
 }
 
+
+function postData(req,res,next) {
+    $.ajax({
+        type: "POST",
+        url: "./imageCompare.py",
+        data: { param: input },
+        success: callbackFunc
+    });
+}
