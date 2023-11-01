@@ -23,28 +23,21 @@
 				"url": {
 					"raw": "http://127.0.0.1:3000/login",
 					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
+					"host": ["127", "0", "0", "1"],
 					"port": "3000",
-					"path": [
-						"login"
-					]
+					"path": ["login"]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Albumn",
+			"name": "album",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"albumnName\" : \"images\"}",
+					"raw": "{\"albumName\" : \"images\"}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -52,30 +45,23 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:3000/albumn",
+					"raw": "http://127.0.0.1:3000/album",
 					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
+					"host": ["127", "0", "0", "1"],
 					"port": "3000",
-					"path": [
-						"albumn"
-					]
+					"path": ["album"]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Albumn",
+			"name": "album",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"albumnName\" : \"images\", \"images\" : \"./img\" }",
+					"raw": "{\"albumName\" : \"images\", \"images\" : \"./img\" }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -83,18 +69,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:3000/albumn",
+					"raw": "http://127.0.0.1:3000/album",
 					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
+					"host": ["127", "0", "0", "1"],
 					"port": "3000",
-					"path": [
-						"albumn"
-					]
+					"path": ["album"]
 				}
 			},
 			"response": []
@@ -109,7 +88,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"image\" : \"./saved_imgs/ref_img_0.jpg\", \"source_image\" : \"./img/4.JPEG\", \"albumn\" : \"images\" }",
+					"raw": "{\"image\" : \"./saved_imgs/ref_img_0.jpg\", \"source_image\" : \"./img/4.JPEG\", \"album\" : \"images\" }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -119,16 +98,9 @@
 				"url": {
 					"raw": "http://127.0.0.1:3000/personPhotos",
 					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
+					"host": ["127", "0", "0", "1"],
 					"port": "3000",
-					"path": [
-						"personPhotos"
-					]
+					"path": ["personPhotos"]
 				}
 			},
 			"response": []
@@ -143,7 +115,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"albumnName\" : \"images\"}",
+					"raw": "{\"albumName\" : \"images\"}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -153,16 +125,9 @@
 				"url": {
 					"raw": "http://127.0.0.1:3000/duplicates",
 					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
+					"host": ["127", "0", "0", "1"],
 					"port": "3000",
-					"path": [
-						"duplicates"
-					]
+					"path": ["duplicates"]
 				}
 			},
 			"response": []
