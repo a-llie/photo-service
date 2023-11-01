@@ -196,6 +196,35 @@
     </div>
 
 
+    <!-- This is the delete duplicates modal. -->
+    <div class="modal fade" id="removeDuplicates" tabindex="-1" aria-labelledby="removeDuplicatesLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="removeDuplicatesLabel">Remove Duplicate Photos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <p> You can remove duplicates or similar looking pictures from your album using this feature!
+                            The slider below tells us how similar you want a photo to look for it to be considered a
+                            duplicate. <br> <br> A value of 100% means only identical photos will be removed.</p>
+                        <label class="form-label" for="similiaritythreshold">Similarity Threshold</label>
+                        <div class="range">
+                            <input type="range" class="form-range" min="90" max="100" id="similiaritythreshold" oninput="percentage.value=similiaritythreshold.value"/>
+                            <output id="percentage" name="percentage" for="similiaritythreshold">0</output><span>% similarity</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Remove Photos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section id="albumcreation">
         <div class="container-fluid">
             <div class="d-grid" id="albumcreationcontainers">
