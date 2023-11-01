@@ -75,7 +75,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"albumName\" : \"images\", \"images\" : \"./img\" }",
+					"raw": "{\"albumName\" : \"images\", \"images\" : [\r\n        \"./img/0.jpg\",\r\n        \"./img/1.jpg\",\r\n        \"./img/2.jpg\",\r\n        \"./img/3.JPEG\",\r\n        \"./img/4.JPEG\",\r\n        \"./img/5.jpg\",\r\n        \"./img/6.jpg\",\r\n        \"./img/7.jpg\",\r\n        \"./img/8.jpg\",\r\n        \"./img/9.jpg\",\r\n        \"./img/9 copy.jpg\"\r\n    ] }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -193,6 +193,35 @@
 					"port": "3000",
 					"path": [
 						"album"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Album",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:3000/album/images",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"album",
+						"images"
 					]
 				}
 			},

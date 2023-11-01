@@ -78,6 +78,7 @@ function server(){
     app.get("/login", render_login);
     app.get("/signup", render_signup);
     app.get("/dashboard",  render_dashboard);
+    app.get("/album/:albumName",  render_album);
     app.get("/albumCreation",  render_albumCreation);
     app.get("/duplicates", User_FindDuplicates);
 
@@ -233,3 +234,24 @@ function render_albumCreation(req,res,next)
     res.status(200).render("albumcreation");
 }
 
+
+function render_album(req,res,next)
+{
+    if (!req.session.loggedin) 
+    {
+        res.redirect("/login");
+        return;
+    }
+    if (albums[req.params.albumName] == null)
+    {
+        res.status(404).send("Album does not exist");
+        return;
+    }
+    if (req.headers.accept === "application/json")
+    {
+        res.status(200).send(albums[req.params.albumName].processedImages);
+        console.log(albums[req.params.albumName].processedImages);
+        return;
+    }
+    res.status(200).render("album", {album : albums[req.params.albumName]});
+}
