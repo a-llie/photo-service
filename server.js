@@ -5,8 +5,26 @@ const fs = require('fs');
 const port = 3000;
 var bodyParser = require('body-parser');
 let app = express();
+const spawn = require('child_process').spawn;
 const {albumns, CreateNewAlbum, AddImagesToAlbum, comparePhotosArray, comparePhotos, deleteImagesFromAlbum} = require('./imageCompare.js');
-let logged_in = false;
+
+function pythonRequest(req,res,next)
+{
+    var dataToSend;
+    // spawn new child process to call the python script
+    const python = spawn('python', ['imageCompare.py']);
+    // collect data from script
+    python.stdout.on('data', function (data) {
+        console.log('Pipe data from python script ...');
+        dataToSend = data.toString();
+    });
+    // in close event we are sure that stream from child process is closed
+    python.on('close', (code) => {
+    console.log(`child process close all stdio with code ${code}`);
+    // send data to browser
+    res.send(dataToSend)
+ });
+}
 
 
 server();
@@ -20,7 +38,6 @@ function server(){
         saveUninitialized: true
     })); 
     
-
     app.set("view engine", "pug");
     app.use(express.static('public'));
     app.use(express.json());
@@ -32,6 +49,8 @@ function server(){
     app.get("/signup", render_signup);
     app.get("/dashboard",  render_dashboard);
     app.get("/albumnCreation",  render_albumnCreation);
+
+    app.get("/python", pythonRequest);
 
     app.post("/login", User_Login, render_dashboard);
     app.put("/albumn", User_CreateNewAlbum);
@@ -177,3 +196,12 @@ function render_albumnCreation(req,res,next)
     res.status(200).render("albumncreation");
 }
 
+
+function postData(req,res,next) {
+    $.ajax({
+        type: "POST",
+        url: "./imageCompare.py",
+        data: { param: input },
+        success: callbackFunc
+    });
+}

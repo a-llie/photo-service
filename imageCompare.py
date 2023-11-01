@@ -197,7 +197,7 @@ def delete_saved_images(saved_images_path):
     for f in files_to_delete:
         os.remove(f)
 
-def main():
+def main_deprecated():
     saved_images_path = './saved_imgs'
     stored_photos_path = './img'
     delete_saved_images(saved_images_path)
@@ -213,5 +213,12 @@ def main():
         
     print(f"Reference is in these photos: {result}")
 
+
+def main():
     
+    print(sys.argv)
+    print("hello")
+    
+    
+
 main()
