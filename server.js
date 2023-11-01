@@ -79,6 +79,7 @@ function server(){
     app.get("/signup", render_signup);
     app.get("/dashboard",  render_dashboard);
     app.get("/albumnCreation",  render_albumnCreation);
+    app.get("/duplicates", User_FindDuplicates);
 
     app.get("/faces", User_FindFacesInPhoto);
     app.get("/personPhotos", User_FindPhotosOfPerson);
@@ -86,7 +87,7 @@ function server(){
     app.post("/login", User_Login, render_dashboard);
     app.put("/albumn", User_CreateNewAlbum);
     app.post("/albumn", User_AddImagesToAlbum);
-    app.delete("/duplicates", User_FindDuplicates);
+    
     app.delete("/albumn", User_DeleteImages, images_delete_response);
 
     app.listen(port);
@@ -169,6 +170,24 @@ function User_FindDuplicates(req,res,next)
         res.status(404).send("No albumn name provided"); 
         return; 
     }
+    comparePhotosArray(albumns[req.body.albumnName].images);
+
+    console.log("Duplicate groups: ");
+    let duplicates = [];
+    for (let i = 0; i < albumns[req.body.albumnName].images.length; i++) {
+        if (albumns[req.body.albumnName].images[i].duplicates.size == 0) continue;
+        console.log("\n");
+        console.log(albumns[req.body.albumnName].images[i].pathOrigin);
+        let dupes_group = [];
+        dupes_group.push(albumns[req.body.albumnName].images[i].pathOrigin);
+        for (const el of albumns[req.body.albumnName].images[i].duplicates) 
+        {
+            console.log(el);
+            dupes_group.push(el);
+        }
+        duplicates.push(dupes_group);
+    }
+      res.send(duplicates);
 }
 
 function User_DeleteImages(req,res,next)

@@ -132,6 +132,40 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Duplicates",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"albumnName\" : \"images\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/duplicates",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"duplicates"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

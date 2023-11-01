@@ -104,12 +104,19 @@ async function inputLoop(){
         r1.question("Albumn Name: >> ", albumnName => {
           comparePhotosArray(albumns[albumnName].images);
           console.log("Duplicate groups: ");
-          
+          let duplicates = [];
           for (let i = 0; i < albumns[albumnName].images.length; i++) {
             if (albumns[albumnName].images[i].duplicates.size == 0) continue;
             console.log("\n");
             console.log(albumns[albumnName].images[i].pathOrigin);
-            for (const el of albumns[albumnName].images[i].duplicates) console.log(el);
+            let dupes_group = [];
+            dupes_group.push(albumns[albumnName].images[i].pathOrigin);
+            for (const el of albumns[albumnName].images[i].duplicates) 
+            {
+              console.log(el);
+              dupes_group.push(el);
+            }
+            return dupes_group;
           }
           inputLoop();
         });
