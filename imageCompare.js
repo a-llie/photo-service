@@ -5,6 +5,8 @@ const { stdin: input, stdout: output } = require('node:process');
 
 
 let albums = {};
+// const r1 = readline.createInterface({ input, output });
+// inputLoop();
 
 function CreateNewAlbum(albumName)
 {
