@@ -1,86 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="album.css">
-    <title>Document</title>
-</head>
-<body>
-    <div class="albumcreation">
-    <div class="titlebar">
-        <h1>Title</h1>
-        <div class="dashboardcontentbuttons">
-            <button class="WhiteButton">Edit Name</button>
-            <button class="WhiteButton">Add Photos</button>
-            <button class="WhiteButton">Remove Duplicates</button>
-            <button class="BlackButton">Share</button>
-        </div>
-    </div>
-    <div class="albumcontainers">
-        <div class="contentcontainer" id="expandedimagecontainer">
-            <div class="containername">
-                <h4>Image Name</h4>
-            </div>
-            <div class="containercontent">
-                <div class="containerphoto">
-                    <img src="brand.jpg">
-                </div>
-                <div class="buttoncontainer">
-                    <div class="sliders"><button class="WhiteButton" id="LeftPhoto"><</button>
-                        <button class="WhiteButton" id="RightPhoto">></button>
-                    </div>
-                    <div class="buttonoptions">
-                        <button class="WhiteButton">Search Photo for Faces</button>
-                        <button class="BlackButton">Delete Photo</button>    
-                    </div>
-                
-                </div>
-            </div>
-        </div>
-        <div class="contentcontainer" id="photoscontainer">
-            <div class="containername">
-                <h4>Album Name</h4>
-            </div>
-            <div class="containercontent">
-            <div class="albumscontainer">
-                <div class="album">
-                    <img src="brand.jpg">
-                    <p>Album Name</p>
-                </div>
-                <div class="album">
-                    <img src="brand.jpg">
-                    <p>Album Name</p>
-                </div>
-                <div class="album">
-                    <img src="brand.jpg">
-                    <p>Album Name</p>
-                </div>
-                <div class="album">
-                    <img src="brand.jpg">
-                    <p>Album Name</p>
-                </div>
-                <div class="album">
-                    <img src="brand.jpg">
-                    <p>Album Name</p>
-                </div>
-                <div class="album">
-                    <img src="brand.jpg">
-                    <p>Album Name</p>
-                </div>
-                <div class="album">
-                    <img src="brand.jpg">
-                    <p>Album Name</p>
-                </div>
-                <div class="album">
-                    <img src="brand.jpg">
-                    <p>Album Name</p>
-                </div>
+    <title>Create Your Album</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="../public/album.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/58a61a6792.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="script.js"></script>
+
+    <!-- This is the sortable javascript module that allows reordering. -->
+    <script type="module">
+        import Sortable from 'https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/Sortable/Sortable.mjs';
+
+        const sortable = new Sortable(document.querySelectorAll('ul'), {
+            draggable: 'li',
+        });
+    </script>
+
+</head>
+
+<body>
+    <section id="Titlebar">
+        <div class="container-fluid">
+            <div class="titlebar">
+                <h1>Title</h1>
+                <div class="dashboardcontentbuttons">
+                    <button class="WhiteButton">Edit Name</button>
+                    <button class="WhiteButton" data-bs-toggle="modal" data-bs-target="#openGallery">Add Photos</button>
+                    <button class="WhiteButton">Remove Duplicates</button>
+                    <button class="BlackButton">Share</button>
                 </div>
+            </div>
         </div>
+    </section>
+
+    <!-- This is supposed to be the modal that opens when 'Add Photos' is clicked. It allows the user to select photos from their gallery. Right now the modal body is empty minus a container-fluid bootstrap div that has the beginnings of a grid in it. When the page loads this should be dynamically populated. -->
+    <div class="modal fade" id="openGallery" tabindex="-1" aria-labelledby="openGalleryLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="openGalleryLabel">Select Photos From Your Album</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-4">.col-md-4</div>
+                            <div class="col-md-4">.col-md-4/div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
         </div>
     </div>
-</div>
+    </div>
+
+
+
+    <section id="albumcreation">
+        <div class="container-fluid">
+            <div class="d-grid" id="albumcreationcontainers">
+                <div class="container-fluid" id="container1">
+                    <div class="containername">
+                        <h4>Album Name</h4>
+                    </div>
+                    <div id="carousel">
+                        <div id="carousel-controls" class="carousel slide" data-bs-ride=false data-interval=1000
+                            data-pause="hover">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img class="testimonial-img" src="../public/sona.jpg" alt="profile">
+                                    <p>sona.jpg</p>
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="testimonial-img" src="../public/qiyana.jpg" alt="profile">
+                                    <p>qiyana.jpg</p>
+                                </div>
+
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-controls"
+                                    data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carousel-controls"
+                                    data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttoncontainer">
+                        <div class="buttonoptions">
+                            <button class="WhiteButton">Search Photo for Faces</button>
+                            <button class="BlackButton">Delete Photo</button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="container-fluid" id="container2">
+                    <div class="containername" id="albumname">
+                        <h4>Album Name</h4>
+                    </div>
+
+                    <div class="d-grid">
+                        <ul>
+                            <li>
+                                <div class="album">
+                                    <img src="../public/brand.jpg">
+                                    <p>Photo name</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="album">
+                                    <img src="../public/zyra.jpg">
+                                    <p>Photo name</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="album">
+                                    <img src="../public/sona.jpg">
+                                    <p>Photo name</p>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="album">
+                                    <img src="../public/qiyana.jpg">
+                                    <p>Photo name</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="album">
+                                    <img src="../public/zyra.jpg">
+                                    <p>Photo name</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="album">
+                                    <img src="../public/sona.jpg">
+                                    <p>Photo name</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="album">
+                                    <img src="../public/brand.jpg">
+                                    <p>Photo name</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="album">
+                                    <img src="../public/zyra.jpg">
+                                    <p>Photo name</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="album">
+                                    <img src="../public/qiyana.jpg">
+                                    <p>Photo name</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="album">
+                                    <img src="../public/sona.jpg">
+                                    <p>Photo name</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
 </body>
+
 </html>
