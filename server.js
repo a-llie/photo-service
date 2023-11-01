@@ -199,12 +199,10 @@ function User_DeleteImages(req,res,next)
     }
     if (req.body.images == null) 
     { 
-        res.status(404).send("No album name provided"); 
-        return; 
+        res.status(404).send("No images provided");
     }
-    //let delete_images = JSON.parse(req.body.images);
-    console.log(req.body.albumName);
-    result = deleteImagesFromAlbum(req.body.albumName, req.body.images);
+    deleteImagesFromAlbum(req.body.albumName, req.body.images);
+    console.log(albums[req.body.albumName].processedImages);
     next();
 }
 
@@ -235,12 +233,3 @@ function render_albumCreation(req,res,next)
     res.status(200).render("albumcreation");
 }
 
-
-function postData(req,res,next) {
-    $.ajax({
-        type: "POST",
-        url: "./imageCompare.py",
-        data: { param: input },
-        success: callbackFunc
-    });
-}
