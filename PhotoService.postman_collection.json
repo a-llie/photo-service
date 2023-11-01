@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8af7da3b-1d1b-46c2-b658-4a6d45beaf87",
+		"_postman_id": "399296d5-8023-4b17-8eec-0a0537870c2d",
 		"name": "PhotoService",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28542164"
@@ -23,9 +23,16 @@
 				"url": {
 					"raw": "http://127.0.0.1:3000/login",
 					"protocol": "http",
-					"host": ["127", "0", "0", "1"],
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
 					"port": "3000",
-					"path": ["login"]
+					"path": [
+						"login"
+					]
 				}
 			},
 			"response": []
@@ -47,9 +54,16 @@
 				"url": {
 					"raw": "http://127.0.0.1:3000/album",
 					"protocol": "http",
-					"host": ["127", "0", "0", "1"],
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
 					"port": "3000",
-					"path": ["album"]
+					"path": [
+						"album"
+					]
 				}
 			},
 			"response": []
@@ -71,9 +85,16 @@
 				"url": {
 					"raw": "http://127.0.0.1:3000/album",
 					"protocol": "http",
-					"host": ["127", "0", "0", "1"],
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
 					"port": "3000",
-					"path": ["album"]
+					"path": [
+						"album"
+					]
 				}
 			},
 			"response": []
@@ -98,9 +119,16 @@
 				"url": {
 					"raw": "http://127.0.0.1:3000/personPhotos",
 					"protocol": "http",
-					"host": ["127", "0", "0", "1"],
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
 					"port": "3000",
-					"path": ["personPhotos"]
+					"path": [
+						"personPhotos"
+					]
 				}
 			},
 			"response": []
@@ -125,9 +153,47 @@
 				"url": {
 					"raw": "http://127.0.0.1:3000/duplicates",
 					"protocol": "http",
-					"host": ["127", "0", "0", "1"],
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
 					"port": "3000",
-					"path": ["duplicates"]
+					"path": [
+						"duplicates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AlbumPhotos",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"albumName\" : \"images\", \"images\" : [\r\n        \"./img/1.jpg\",\r\n        \"./img/2.jpg\"\r\n    ] }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/album",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"album"
+					]
 				}
 			},
 			"response": []
