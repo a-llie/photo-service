@@ -59,8 +59,8 @@ h1{
     padding: 0.75rem 0;
     border-top: 2px solid #EEF1F4;
     text-align: center;
-    position: relative;
-    bottom: 0;
+    position: sticky;
+    top: 90%;
 }
 
 .buttoncontainer button{
