@@ -113,7 +113,7 @@ details, input {
 
 
 #Titlebar .container-fluid{
-    padding: 3% 15%;
+    padding: 0% 15% 3% 15%;
 }
 
 #albumcreation{
@@ -210,3 +210,46 @@ li{
 .selected {
     border: 3px solid red;
 }
+
+
+.header {
+    width: 100%;
+    overflow: hidden;
+    position: sticky;
+    display: block;
+    top: 0px;
+    border-bottom: 3px solid #545F71;
+    font-size: 16px;
+    color: black!important;
+}
+
+.logo{
+    float:left;
+    margin: 24px 104px;
+    padding: 12px 40px;
+    background-color: #2D3648;
+    color: black!important;
+    text-align: left;
+    text-decoration: none;
+    display: block;
+}
+
+.nav-link{
+    color: black!important;
+}
+
+.nav-item{
+    border-radius: 6px;
+    border: 2px solid black;
+    margin: 2px;
+    }
+
+.container{
+    padding-left: 3rem;
+    padding-right:3rem;
+    margin-left: 0px;
+    margin-right: 0px;
+    width: 100%;
+    max-width: 1900px!important;
+}
+
