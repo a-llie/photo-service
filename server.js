@@ -10,10 +10,11 @@ const {albums, CreateNewAlbum, AddImagesToAlbum, comparePhotosArray, comparePhot
 
 function User_FindFacesInPhoto(req,res,next)
 {
-    let image = req.body.image;
+    let image = req.query.image;
     if (image == null)
     {
         renderError(req,res,next, "No image provided", 404);
+        console.log("No image provided");
         return;
     }
     var response;
