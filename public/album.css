@@ -260,3 +260,8 @@ li{
 .mb-4{
     margin-bottom: 0px!important;
 }
+
+.headericon{
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
