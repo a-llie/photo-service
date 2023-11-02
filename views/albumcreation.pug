@@ -52,8 +52,10 @@ section#Titlebar
                 img(src=val)
                 p=val.split('/')[val.split('/').length -1]
       .modal-footer
-        button.btn.btn-secondary(type='button' data-bs-dismiss='modal' ) Close
-        button.btn.btn-primary(type='button' onclick="addImagesRequest()") Add images
+        button.btn.btn-secondary#add-images-close-button(type='button' data-bs-dismiss='modal' ) Close
+        button.btn.btn-primary#add-images-button(type='button' onclick="addImagesRequest()") Add images
+        div.spinner-border#add-images-spinner(role="status" hidden="true")
+          span.visually-hidden Loading
 // This is supposed to be the modal that opens when 'Add Photos' is clicked. It allows the user to select photos from their gallery. Right now the modal body is empty minus a container-fluid bootstrap div that has the beginnings of a grid in it. When the page loads this should be dynamically populated.
 #openGallery.modal.fade(tabindex='-1' aria-labelledby='openGalleryLabel' aria-hidden='true')
   .modal-dialog.modal-lg.modal-dialog-centered.modal-dialog-scrollable
@@ -74,6 +76,8 @@ section#Titlebar
       .modal-footer
         button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
         button.btn.btn-primary(type='button') Add images
+        div.spinner-border(role="status")
+          span.visually-hidden Loading
 //
   This is the share modal. It needs javascript for the invite button to show a little success message like 'Invite Sent'.
   Copy link also needs 'Link copied.'.
