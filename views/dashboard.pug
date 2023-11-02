@@ -13,7 +13,7 @@ head
 .dashboard
   .sidebar
     .UserInfo
-      img(src='brand.jpg')
+      img(src='defaultuser.jpeg')
       h2 User
     ul#sidebarlinks.nav.nav-pills.flex-column.mb-auto
       li.nav-item
@@ -66,28 +66,11 @@ head
               button.BlackButton(type='submit' value='Submit') Submit
           button.BlackButton Delete
       .albumscontainer
-        .album
-          img(src='brand.jpg')
-          p Album Name
-        .album
-          img(src='brand.jpg')
-          p Album Name
-        .album
-          img(src='brand.jpg')
-          p Album Name
-        .album
-          img(src='brand.jpg')
-          p Album Name
-        .album
-          img(src='brand.jpg')
-          p Album Name
-        .album
-          img(src='brand.jpg')
-          p Album Name
-        .album
-          img(src='brand.jpg')
-          p Album Name
-        .album
-          img(src='brand.jpg')
-          p Album Name
-script(src='../public/scripts/dashboard.js')
+        each album in albums ?  albums : [] 
+          .album
+            a(href=album.link)
+              img(src=album.cover)
+            p=album.name
+        if albums[0] === undefined
+          p Your albums will appear here once you've created them.
+script(src='/scripts/dashboard.js')

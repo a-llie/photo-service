@@ -173,6 +173,16 @@ function User_ChangeAlbumName(req,res,next)
         return;
     }
 
+    let existing_keys = Object.keys(albums)
+    for (key in existing_keys)
+    {
+        if (key.toLowerCase().localeCompare((decodeURIComponent(req.body.albumName)).toLowerCase()))
+        {
+            renderError(req,res,next, "album already exists", 404);
+            return;
+        }
+    }
+
     albums[decodeURIComponent(req.body.albumName)] = {};
     albums[req.body.albumName] = albums[decodeURIComponent(req.params.albumName)];
     delete albums[decodeURIComponent(req.params.albumName)];
@@ -292,7 +302,19 @@ function render_login(req,res,next)
 
 function render_dashboard(req,res,next)
 {
-    res.status(200).render("dashboard");
+    let albums_list = Object.keys(albums);
+    let album_dict = [];
+    for (let i = 0; i < albums_list.length; i++) {
+        let album_entry = { name : albums_list[i], link : "/album/" + albums_list[i], cover : "emptyalbum.png"};
+        if (albums[albums_list[i]].images.length > 0)
+        {
+            console.log(albums[albums_list[i]]);
+            album_entry.cover = Array.from(albums[albums_list[i]].processedImages)[0].replace("./public", "");
+        }
+        
+        album_dict.push(album_entry);
+    }
+    res.status(200).render("dashboard", {albums : album_dict});
 }
 
 function render_signup(req,res,next)
