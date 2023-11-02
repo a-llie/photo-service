@@ -3,24 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="dashboardstyles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../public/dashboardstyles.css">
 
     <title>Document</title>
 </head>
 <body>
-    <div class="header">
-        <a href="#default" class="logo">Logo</a>
-        <div class="header-links">
-          <a class="Dashboard" href="#dashboard">Dashboard</a>
-        </div>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none" id="logo">
+            <span class="fs-4">PhotoService</span>
+          </a>
+        </header>
       </div>
 
       <div class="dashboard">
         <div class="sidebar">
             <div class="UserInfo">
-                <img src="brand.jpg">
+                <img src="../public/brand.jpg">
                 <h2>User</h2>
             </div>
+            <ul class="nav nav-pills flex-column mb-auto" id="sidebarlinks">
+                <li class="nav-item">
+                  <a href="#" class="nav-link active" >
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#"/></svg>
+                    Dashboard
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="nav-link" >
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#"/></svg>
+                    Gallery
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="nav-link" >
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#t"/></svg>
+                    Orders
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="nav-link" >
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#"/></svg>
+                    Account
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="nav-link link-secondary" >
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#"/></svg>
+                    Logout
+                  </a>
+                </li>
+              </ul>
           </div>
           
           <div class="dashboardcontent">
@@ -89,6 +127,7 @@
       </div>
      
     
-  
+      <script src="../public/scripts/dashboard.js"></script>
+
 </body>
 </html>
