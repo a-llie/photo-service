@@ -106,8 +106,10 @@ text-align: center;
 }
 
 .testimonial-img{
-width: 70%;
+width: 30%;
 margin: 30px 20px;
+border-radius: 5%;
+border: 1px solid white;
 }
 
 /* Carousel */
