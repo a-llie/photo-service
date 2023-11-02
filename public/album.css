@@ -175,7 +175,7 @@ li{
     list-style-type: none;
 }
 
-#photogallery{
+#photogallery, #displayFacesSelection{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

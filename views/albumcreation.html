@@ -222,10 +222,9 @@
         </div>
     </div>
 
-        <!-- This is the choose a face modal. -->
-        <div class="modal fade" id="displayFaces" tabindex="-1" aria-labelledby="displayFacesLabel "
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <!-- This is the choose a face modal. -->
+    <div class="modal fade" id="displayFaces" tabindex="-1" aria-labelledby="displayFacesLabel " aria-hidden="true">
+        <div class="modal-dialog  modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="removeDuplicatesLabel">Choose a Face From this Photo</h1>
@@ -233,12 +232,27 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <p> Choose a face from this photo. <br> <br> Select the person you want to add photos to this album of from your gallery.</p>
+                        <p> Choose a face from this photo. <br> <br> Select the person you want to add photos to this
+                            album of from your gallery.</p>
+                    </div>
+                    <div id="displayFacesSelection">
+                        <div class="photo" onclick="handleFaceSelection(this)">
+                            <img src="../public/zyra.jpg">
+                            <p>Photo name</p>
+                        </div>
+                        <div class="photo" onclick="handleFaceSelection(this)">
+                            <img src="../public/zyra.jpg">
+                            <p>Photo name</p>
+                        </div>
+                        <div class="photo" onclick="handleFaceSelection(this)">
+                            <img src="../public/zyra.jpg">
+                            <p>Photo name</p>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Select</button>
+                    <button type="button" class="btn btn-primary" onclick="sendFacesRequest()">Select</button>
                 </div>
             </div>
         </div>
@@ -259,7 +273,7 @@
 
                     <div class="buttoncontainer">
                         <div class="buttonoptions">
-                            <button class="WhiteButton" onclick="sendFacesRequest()">Search Photo for Faces</button>
+                            <button class="WhiteButton" onclick="searchPhotoForFaces()">Search Photo for Faces</button>
                             <button class="BlackButton">Delete Photo</button>
                         </div>
                     </div>

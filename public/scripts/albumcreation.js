@@ -101,12 +101,23 @@ function expandImage(element){
     document.getElementById("expandedimagelabel").textContent = element.querySelectorAll("div")[0].querySelectorAll("p")[0].textContent;
 }
 
-function sendFacesRequest(){
+function searchPhotoForFaces(){
     //insert HTTP request
 
     //this shows the modal that needs the faces
     var element = document.getElementById("displayFaces");
-
     var modal = new bootstrap.Modal(element);
     modal.show();
 }
+
+function handleFaceSelection(element){
+    let gallery = document.getElementById("displayFacesSelection");
+    for(var i = 0; i < gallery.querySelectorAll("div").length; i++){
+        if(gallery.querySelectorAll("div")[i].classList.contains("selected")){
+            gallery.querySelectorAll("div")[i].classList.toggle("selected");
+        }
+    }
+    console.log("Photo selected.");
+    element.classList.toggle("selected");  
+}
+
