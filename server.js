@@ -13,7 +13,7 @@ function User_FindFacesInPhoto(req,res,next)
     let image = req.body.image;
     if (image == null)
     {
-        res.status(404).send("No image provided");
+        renderError(req,res,next, "No image provided", 404);
         return;
     }
     var response;
@@ -25,7 +25,10 @@ function User_FindFacesInPhoto(req,res,next)
     python.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
     // send data to browser
-    res.send(response)
+    console.log(response);
+    response = response.replace(/'/gm, '"');
+    response = JSON.parse(response);
+    res.send(response);
  });
 }
 
@@ -52,6 +55,8 @@ function User_FindPhotosOfPerson(req,res,next)
     python.on('close', (code) => {
     console.log(`child process exited with code ${code}`);
     // send data to browser
+    response = response.replace(/'/gm, '"');
+    response = JSON.parse(response);
     res.send(response)
  });
 }
@@ -80,17 +85,19 @@ function server(){
     app.get("/dashboard",  render_dashboard);
     app.get("/album/:albumName",  render_album);
     app.get("/albumCreation",  render_albumCreation);
-    app.get("/duplicates", User_FindDuplicates);
+    app.post("/duplicates/:albumName", User_FindDuplicates);
 
     app.get("/faces", User_FindFacesInPhoto);
     app.get("/personPhotos", User_FindPhotosOfPerson);
 
     app.post("/login", User_Login, render_dashboard);
-    app.put("/album", User_CreateNewAlbum);
+    app.post("/create", User_CreateNewAlbum, render_albumCreation);
     app.post("/album", User_AddImagesToAlbum);
+    app.post("/album/:albumName", User_ChangeAlbumName);
     
     app.delete("/album", User_DeleteImages, images_delete_response);
 
+    app.use(renderError);
     app.listen(port);
 
     console.log("Listening on port 3000");
@@ -100,12 +107,12 @@ function User_Login(req,res,next)
 {
     if(req.body.username == null)
     {
-        res.status(404).send("No username provided");
+        renderError(req,res,next, "No username provided", 404);
         return;
     }
     if(req.body.password == null)
     {
-        res.status(404).send("No password provided");
+        renderError(req,res,next, "No password provided", 404);
         return;
     }
 
@@ -120,15 +127,15 @@ function User_Login(req,res,next)
 
 function User_CreateNewAlbum(req,res,next)
 {
-    if (!req.session.loggedin) 
-    {
-        res.redirect("/login");
-        return;
-    }
+    // if (!req.session.loggedin) 
+    // {
+    //     res.redirect("/login");
+    //     return;
+    // }
     //options: "album created, album already exists"
     if (req.body.albumName == null) 
     { 
-        res.status(404).send("No album name provided"); 
+        renderError(req,res,next, "No album name provided", 404);
         return; 
     }
 
@@ -136,26 +143,49 @@ function User_CreateNewAlbum(req,res,next)
 
     if (result == "[ERR] album already exists")
     {
-        res.status(404).send("album already exists");
+        renderError(req,res,next, "album already exists", 404);
     }
     else
     {
-        res.status(200).send("album created");
-    
+        next();
     }
 }
 
-async function User_AddImagesToAlbum(req,res,next)
+function User_ChangeAlbumName(req,res,next)
 {
-    if (req.body.albumName == null) 
-    { 
-        res.status(404).send("No album provided"); 
-        return; 
+    if (decodeURIComponent(req.body.albumName) === decodeURIComponent(req.params.albumName))
+    {
+        res.status(200).redirect("/album/" + req.body.albumName);
+        return;
     }
 
+    albums[decodeURIComponent(req.body.albumName)] = {};
+    albums[req.body.albumName] = albums[decodeURIComponent(req.params.albumName)];
+    delete albums[decodeURIComponent(req.params.albumName)];
+    res.status(200).redirect("/album/" + req.body.albumName);
+}
+
+
+async function User_AddImagesToAlbum(req,res,next)
+{
+    // if (!req.session.loggedin)
+    // {
+    //     res.redirect("/login");
+    //     return;
+    // }
+    if (req.body.albumName == null) 
+    { 
+        renderError(req,res,next, "No album provided", 404);
+        return; 
+    }
+    if (albums[req.body.albumName] == null) 
+    {
+        renderError(req,res,next, "No album with that name", 404);
+        return; 
+    }
     if (req.body.images == null) 
     { 
-        res.status(404).send("No images provided"); 
+        renderError(req,res,next, "No images provided", 404);
         return; 
     }
     
@@ -166,41 +196,69 @@ async function User_AddImagesToAlbum(req,res,next)
 
 function User_FindDuplicates(req,res,next)
 {
-    if (req.body.albumName == null) 
+    // if (!req.session.loggedin)
+    // {
+    //     res.redirect("/login");
+    //     return;
+    // }
+    if (req.params.albumName == null) 
     { 
-        res.status(404).send("No album name provided"); 
+        renderError(req,res,next, "No album name provided", 404);
         return; 
     }
-    comparePhotosArray(albums[req.body.albumName].images);
+    req.body.similaritythresold = Number(req.body.similaritythresold);
+    if (req.body.similaritythresold === null)
+    {
+        req.body.similaritythresold = 0.0;
+    }
+    if (req.body.similaritythresold === 100)
+    {
+        req.body.similaritythresold = 0.0;
+    }
+    if (req.body.similaritythresold > 85 && req.body.similaritythresold < 100)
+    {
+        req.body.similaritythresold = 0.15;
+    }
+
+    comparePhotosArray(albums[req.params.albumName].images, req.body.similaritythresold);
 
     console.log("Duplicate groups: ");
     let duplicates = [];
-    for (let i = 0; i < albums[req.body.albumName].images.length; i++) {
-        if (albums[req.body.albumName].images[i].duplicates.size == 0) continue;
+    let deletion = [];
+    for (let i = 0; i < albums[req.params.albumName].images.length; i++) {
+        if (albums[req.params.albumName].images[i].duplicates.size == 0) continue;
         console.log("\n");
-        console.log(albums[req.body.albumName].images[i].pathOrigin);
+        console.log(albums[req.params.albumName].images[i].pathOrigin);
         let dupes_group = [];
-        dupes_group.push(albums[req.body.albumName].images[i].pathOrigin);
-        for (const el of albums[req.body.albumName].images[i].duplicates) 
+        dupes_group.push(albums[req.params.albumName].images[i].pathOrigin);
+        for (const el of albums[req.params.albumName].images[i].duplicates) 
         {
             console.log(el);
             dupes_group.push(el);
+            deletion.push(el);
         }
         duplicates.push(dupes_group);
     }
-      res.send(duplicates);
+    deleteImagesFromAlbum(req.params.albumName, deletion);
+    console.log(albums[req.params.albumName].processedImages);
+    res.status(200).redirect("/album/" + req.params.albumName);
 }
 
 function User_DeleteImages(req,res,next)
 {
+    // if (!req.session.loggedin)
+    // {
+    //     res.redirect("/login");
+    //     return;
+    // }
     if (req.body.albumName == null) 
     { 
-        res.status(404).send("No album name provided"); 
+        renderError(req,res,next, "No album name provided", 404);
         return; 
     }
     if (req.body.images == null) 
     { 
-        res.status(404).send("No images provided");
+        renderError(req,res,next, "No images provided", 404);
     }
     deleteImagesFromAlbum(req.body.albumName, req.body.images);
     console.log(albums[req.body.albumName].processedImages);
@@ -231,28 +289,61 @@ function render_signup(req,res,next)
 
 function render_albumCreation(req,res,next)
 {
-    res.status(200).render("albumcreation");
-    //    res.status(200).render("albumcreation", {albumname: req.albumname, recommendedMovies: req.recommendedMovies, session: req.session, inList: req.inList}
+    switch (req.headers.accept)
+    {
+           case "application/json":
+            res.set('Content-Type', 'application/json').send("album created");
+               break;
+           default:
+            res.status(200).redirect("/album/" + req.body.albumName);
+               break;
+    }
 }
 
 
 function render_album(req,res,next)
 {
-    if (!req.session.loggedin) 
-    {
-        res.redirect("/login");
-        return;
-    }
+    // if (!req.session.loggedin) 
+    // {
+    //     res.redirect("/login");
+    //     return;
+    // }
+    
     if (albums[req.params.albumName] == null)
     {
-        res.status(404).send("Album does not exist");
+        renderError(req,res,next, "Album does not exist", 404);
         return;
+    }
+    let response = []; 
+    let array = Array.from(albums[req.params.albumName].images);
+    array = array.sort(( a, b) => {b.index - a.index}); 
+    for (let i = 0; i < array.length; i++) {
+        response.push(array[i].pathOrigin);
     }
     if (req.headers.accept === "application/json")
     {
-        res.status(200).send(albums[req.params.albumName].processedImages);
-        console.log(albums[req.params.albumName].processedImages);
+        res.status(200).send(response);
+        console.log(response);
         return;
     }
-    res.status(200).render("album", {album : albums[req.params.albumName]});
+    for (let i = 0; i <response.length; i++) {
+        response[i] = response[i].replace("./public", "");
+    }
+    let gallery_images = fs.readdirSync("./public/img");
+    for (let i = 0; i <gallery_images.length; i++) {
+        gallery_images[i] = "/img/" + gallery_images[i];
+    }
+    res.status(200).render("albumCreation", {album : response, albumName : req.params.albumName, gallery : gallery_images});
+}
+
+function renderError(req,res,next, errorMessage = "Invalid Request", errorCode = 404 ){ //return a page with error message
+    switch (req.headers.accept)
+    {
+           case "application/json":
+            res.set('Content-Type', 'application/json').status(errorCode).json({error: errorCode, message: errorMessage});
+               break;
+           default:
+            res.status(errorCode).render("error", {error: errorCode, message: errorMessage});
+               break;
+    }
 }
