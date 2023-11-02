@@ -131,8 +131,11 @@ section#albumcreation
         .containername
           h4=albumName
         #carousel.carousel-item.active
-          img.testimonial-img(src='../public/sona.jpg' alt='profile')
-          p sona.jpg
+          if album[0] !== undefined
+            img.testimonial-img(src=album[0] alt='profile')
+            p=album[0].split('/')[album[0].split('/').length -1]
+          else
+            p Images will appear here once you've added some to your album.
         .buttoncontainer
           .buttonoptions
             button.WhiteButton Search Photo for Faces
