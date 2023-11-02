@@ -4,7 +4,7 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   title Create Your Album
   link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor' crossorigin='anonymous')
-  link(rel='stylesheet' href='../public/album.css')
+  link(rel='stylesheet' type='text/css' href='/album.css')
   script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js' integrity='sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2' crossorigin='anonymous')
   script(src='https://kit.fontawesome.com/58a61a6792.js' crossorigin='anonymous')
   script(src='https://code.jquery.com/jquery-3.6.0.js')
@@ -19,9 +19,13 @@ head
 section#Titlebar
   .container-fluid
     .titlebar
-      h1 Title
+      h1=albumName
       .dashboardcontentbuttons
-        button.WhiteButton Edit Name
+        details.WhiteButton
+          summary Edit Name
+          form(action="/album/" + albumName method="POST")
+            input(type="text" name="albumName" id="albumName" placeholder="New Name").WhiteButton
+            button.BlackButton(type="submit" value="Submit") Submit
         button#addPhotosButton.WhiteButton(data-bs-toggle='modal' data-bs-target='#openGallery') Add Photos
         button.WhiteButton(data-bs-toggle='modal' data-bs-target='#removeDuplicates')
           | Remove
@@ -41,29 +45,10 @@ section#Titlebar
         .container-fluid
           #photogallery
             .photo
-              img(src='../public/zyra.jpg')
-              p Photo name
-            .photo
-              img(src='../public/sona.jpg')
-              p Photo name
-            .photo
-              img(src='../public/brand.jpg')
-              p Photo name
-            .photo
-              img(src='../public/qiyana.jpg')
-              p Photo name
-            .photo
-              img(src='../public/zyra.jpg')
-              p Photo name
-            .photo
-              img(src='../public/sona.jpg')
-              p Photo name
-            .photo
-              img(src='../public/brand.jpg')
-              p Photo name
-            .photo
-              img(src='../public/qiyana.jpg')
-              p Photo name
+              each val in album ? album : []
+                .photo
+                  img(src=val)
+                  p=val.split('/')[val.split('/').length -1]
       .modal-footer
         button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
         button.btn.btn-primary(type='button') Add images
@@ -80,30 +65,10 @@ section#Titlebar
       .modal-body
         .container-fluid
           #photogallery
-            .photo
-              img(src='../public/zyra.jpg')
-              p Photo name
-            .photo
-              img(src='../public/sona.jpg')
-              p Photo name
-            .photo
-              img(src='../public/brand.jpg')
-              p Photo name
-            .photo
-              img(src='../public/qiyana.jpg')
-              p Photo name
-            .photo
-              img(src='../public/zyra.jpg')
-              p Photo name
-            .photo
-              img(src='../public/sona.jpg')
-              p Photo name
-            .photo
-              img(src='../public/brand.jpg')
-              p Photo name
-            .photo
-              img(src='../public/qiyana.jpg')
-              p Photo name
+            each val in album ? album : []
+              .photo
+                img(src=val)
+                p=val.split('/')[val.split('/').length -1]
       .modal-footer
         button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
         button.btn.btn-primary(type='button') Add images
@@ -153,80 +118,34 @@ section#Titlebar
             |  A value of 100% means only identical photos will be removed.
           label.form-label(for='similiaritythreshold') Similarity Threshold
           .range
-            input#similiaritythreshold.form-range(type='range' min='90' max='100' oninput='percentage.value=similiaritythreshold.value')
-            output#percentage(name='percentage' for='similiaritythreshold') 0
+          form(action="/duplicates/" + albumName method="POST")
+            input#similiaritythreshold.form-range(type='range' min='90' max='100' default='95' name='percentage' oninput='percentage.value=similiaritythreshold.value')
+            output#percentage(name='percentage' for='similiaritythreshold') 95
             span % similarity
-      .modal-footer
-        button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
-        button.btn.btn-primary(type='button') Remove Photos
+            .modal-footer
+              button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
+              button.btn.btn-primary(type='Submit') Remove Photos
 section#albumcreation
   .container-fluid
     #albumcreationcontainers.d-grid
       #container1.container-fluid
         .containername
           h4 Album Name
-        #carousel
-          #carousel-controls.carousel.slide(data-bs-ride='false' data-interval='1000' data-pause='hover')
-            .carousel-inner
-              .carousel-item.active
-                img.testimonial-img(src='../public/sona.jpg' alt='profile')
-                p sona.jpg
-              .carousel-item
-                img.testimonial-img(src='../public/qiyana.jpg' alt='profile')
-                p qiyana.jpg
-              button.carousel-control-prev(type='button' data-bs-target='#carousel-controls' data-bs-slide='prev')
-                span.carousel-control-prev-icon(aria-hidden='true')
-                span.visually-hidden Previous
-              button.carousel-control-next(type='button' data-bs-target='#carousel-controls' data-bs-slide='next')
-                span.carousel-control-next-icon(aria-hidden='true')
-                span.visually-hidden Next
+        #carousel.carousel-item.active
+          img.testimonial-img(src='../public/sona.jpg' alt='profile')
+          p sona.jpg
         .buttoncontainer
           .buttonoptions
             button.WhiteButton Search Photo for Faces
             button.BlackButton Delete Photo
       #container2.container-fluid
         #albumname.containername
-          h4 Album Name
+          h4=albumName
         .d-grid
           ul
-            li
-              .photo
-                img(src='../public/brand.jpg')
-                p Photo name
-            li
-              .photo
-                img(src='../public/zyra.jpg')
-                p Photo name
-            li
-              .photo
-                img(src='../public/sona.jpg')
-                p Photo name
-            li
-              .photo
-                img(src='../public/qiyana.jpg')
-                p Photo name
-            li
-              .photo
-                img(src='../public/zyra.jpg')
-                p Photo name
-            li
-              .photo
-                img(src='../public/sona.jpg')
-                p Photo name
-            li
-              .photo
-                img(src='../public/brand.jpg')
-                p Photo name
-            li
-              .photo
-                img(src='../public/zyra.jpg')
-                p Photo name
-            li
-              .photo
-                img(src='../public/qiyana.jpg')
-                p Photo name
-            li
-              .photo
-                img(src='../public/sona.jpg')
-                p Photo name
+            each val in album ? album : []
+              li
+                .photo
+                  img(src=val)
+                  p=val.split('/')[val.split('/').length -1]
 script(src='../public/scripts/albumcreation.js')

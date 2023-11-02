@@ -14,6 +14,7 @@ function CreateNewAlbum(albumName)
     albums[albumName] = {}; 
     albums[albumName].processedImages = new Set();
     albums[albumName].images = [];
+    albums[albumName].lastIndex = 0;
     console.log("album created");
     return "album created";
   }
@@ -55,6 +56,8 @@ async function processImages(album,folder) {
       result.pathOrigin = folder[i];
       result.duplicates = new Set();
       result.isDuplicate = false;
+      result.index = album.lastIndex;
+      album.lastIndex = result.index + 1;
       album.processedImages.add(result.pathOrigin);
       album.images.push(result
       .resize(512, 512))
@@ -65,7 +68,7 @@ async function processImages(album,folder) {
   }
 } 
 
-function comparePhotosArray(images) {
+function comparePhotosArray(images, similarityThreshold = 0.15) {
   
 for (var i = 0; i < images.length - 1; i++) {
    for (var j = i+1; j < images.length; j++) {
@@ -75,11 +78,13 @@ for (var i = 0; i < images.length - 1; i++) {
  }
 }
 
-async function comparePhotos(img1, img2)
+async function comparePhotos(img1, img2, similarityThreshold = 0.15)
 {
   var distance = Jimp.distance(img1, img2); // perceived distance
   var diff = Jimp.diff(img1, img2); // pixel difference
-  if ((distance < 0.15 && diff.percent < 0.4) || diff.percent < 0.05) {
+  let percentDiff = 0.05;
+  if (similarityThreshold == 0 ) percentDiff = 0;
+  if ((distance < similarityThreshold && diff.percent < 0.4) || diff.percent < percentDiff) {
     img1.duplicates.add(img2.pathOrigin);
     img2.isDuplicate = true;
   }
