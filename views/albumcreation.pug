@@ -87,12 +87,12 @@ section#Titlebar
               |  Want some extra ways to show off your perfect album? You can share this
               |                                 album by downloading the photos or by purchasing a formatted real-life copy.
             input.form-control(type='text' placeholder="Recipient's email address" aria-label="Recipient's email address" aria-describedby='button-emailaddress')
-            button#button-emailaddress.btn.btn-outline-dark(type='button' onclick='alertFeedback(this)') Invite
+            button#button-emailaddress.btn.btn-outline-dark(type='button' onclick='inviteSent()') Invite
           .input-group.mb-3
             input.form-control(type='text' disabled='disabled' placeholder='www.photoservice.com/album/1234567' aria-label='www.photoservice.com/album/1234567' aria-describedby='button-copylink')
-            button#button-copylink.btn.btn-dark(type='button' onclick='alertFeedback(this)') Copy Link
-          button#button-download.btn.btn-outline-dark.btn-share(type='button' onclick='alertFeedback(this)') Download Album (.zip)
-          button#button-purchase.btn.btn-outline-dark.btn-share(type='button' onclick='alertFeedback(this)') Purchase Album
+            button#button-copylink.btn.btn-dark(type='button' onclick='linkCopied()') Copy Link
+          button#button-download.btn.btn-outline-dark.btn-share(type='button' onclick='download()') Download Album (.zip)
+          button#button-purchase.btn.btn-outline-dark.btn-share(type='button' onclick='purchase()') Purchase Album
 
 // This is the delete duplicates modal.
 #removeDuplicates.modal.fade(tabindex='-1' aria-labelledby='removeDuplicatesLabel' aria-hidden='true')

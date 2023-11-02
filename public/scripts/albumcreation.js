@@ -43,19 +43,23 @@ function addImagesRequest(){
 }
 
 
-function alertFeedback(element){
-    if(element.id = "button-emailladdress"){
-        alert("Invite sent successfully.")
-    }
-    else if(element.id = "button-copylink"){
-        alert("Link copied successfully.")
-    }
-    else if(element.id = "button-download"){
-        alert("Download started successfully.")
-    }
-    else{
-        alert("Album purchased.")
-    }
+function inviteSent(){
+    alert("Invite sent successfully.")
+}
+
+function linkCopied(){
+    alert("Link copied successfully.")
+
+}
+
+function download(){
+    alert("Download started successfully.")
+
+}
+
+function purchase(){
+    alert("Album purchased.")
+
 }
 
 function sendReorderedArray(){
