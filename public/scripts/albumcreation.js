@@ -3,6 +3,7 @@ let selectedPhotos = [];
 let albumName = document.getElementById("Title").innerText;
 
 function handleGalleryPhotoSelection(element){
+    console.log("Photo selected.");
     element.classList.toggle("selected");
 }
 
@@ -11,7 +12,7 @@ function addImagesRequest(){
     let gallery = document.getElementById("photogallery");
     for(var i = 0; i < gallery.querySelectorAll("div").length; i++){
         if(gallery.querySelectorAll("div")[i].classList.contains("selected")){
-            let path = '../public/';
+            let path = './public/img/';
             path += gallery.querySelectorAll("div")[i].querySelectorAll("p")[0].innerText;
             photosToAdd.push(path)
         }

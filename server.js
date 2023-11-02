@@ -25,6 +25,9 @@ function User_FindFacesInPhoto(req,res,next)
     python.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
     // send data to browser
+    console.log(response);
+    response = response.replace(/'/gm, '"');
+    response = JSON.parse(response);
     res.send(response);
  });
 }
@@ -52,6 +55,8 @@ function User_FindPhotosOfPerson(req,res,next)
     python.on('close', (code) => {
     console.log(`child process exited with code ${code}`);
     // send data to browser
+    response = response.replace(/'/gm, '"');
+    response = JSON.parse(response);
     res.send(response)
  });
 }
@@ -86,7 +91,7 @@ function server(){
     app.get("/personPhotos", User_FindPhotosOfPerson);
 
     app.post("/login", User_Login, render_dashboard);
-    app.put("/album", User_CreateNewAlbum);
+    app.post("/create", User_CreateNewAlbum, render_albumCreation);
     app.post("/album", User_AddImagesToAlbum);
     app.post("/album/:albumName", User_ChangeAlbumName);
     
@@ -122,11 +127,11 @@ function User_Login(req,res,next)
 
 function User_CreateNewAlbum(req,res,next)
 {
-    if (!req.session.loggedin) 
-    {
-        res.redirect("/login");
-        return;
-    }
+    // if (!req.session.loggedin) 
+    // {
+    //     res.redirect("/login");
+    //     return;
+    // }
     //options: "album created, album already exists"
     if (req.body.albumName == null) 
     { 
@@ -142,30 +147,32 @@ function User_CreateNewAlbum(req,res,next)
     }
     else
     {
-        res.status(200).send("album created");
-    
+        next();
     }
 }
 
 function User_ChangeAlbumName(req,res,next)
 {
-    console.log(req.params.albumName);
-    console.log(req.body.albumName);
-    albums[req.body.albumName] = {};
-    albums[req.body.albumName] = albums[req.params.albumName];
-    console.log(albums[req.body.albumName]);
-    delete albums[req.params.albumName];
+    if (decodeURIComponent(req.body.albumName) === decodeURIComponent(req.params.albumName))
+    {
+        res.status(200).redirect("/album/" + req.body.albumName);
+        return;
+    }
+
+    albums[decodeURIComponent(req.body.albumName)] = {};
+    albums[req.body.albumName] = albums[decodeURIComponent(req.params.albumName)];
+    delete albums[decodeURIComponent(req.params.albumName)];
     res.status(200).redirect("/album/" + req.body.albumName);
 }
 
 
 async function User_AddImagesToAlbum(req,res,next)
 {
-    if (!req.session.loggedin)
-    {
-        res.redirect("/login");
-        return;
-    }
+    // if (!req.session.loggedin)
+    // {
+    //     res.redirect("/login");
+    //     return;
+    // }
     if (req.body.albumName == null) 
     { 
         renderError(req,res,next, "No album provided", 404);
@@ -199,18 +206,21 @@ function User_FindDuplicates(req,res,next)
         renderError(req,res,next, "No album name provided", 404);
         return; 
     }
-    console.log(req.body);
-    
-    if (req.body.percentage === null)
+    req.body.similaritythresold = Number(req.body.similaritythresold);
+    if (req.body.similaritythresold === null)
     {
-        req.body.percentage = 0.0;
+        req.body.similaritythresold = 0.0;
     }
-    if (req.body.percentage > 85 && req.body.percentage < 100)
+    if (req.body.similaritythresold === 100)
     {
-        req.body.percentage = 0.15;
+        req.body.similaritythresold = 0.0;
+    }
+    if (req.body.similaritythresold > 85 && req.body.similaritythresold < 100)
+    {
+        req.body.similaritythresold = 0.15;
     }
 
-    comparePhotosArray(albums[req.params.albumName].images, Number(req.body.percentage));
+    comparePhotosArray(albums[req.params.albumName].images, req.body.similaritythresold);
 
     console.log("Duplicate groups: ");
     let duplicates = [];
@@ -236,11 +246,11 @@ function User_FindDuplicates(req,res,next)
 
 function User_DeleteImages(req,res,next)
 {
-    if (!req.session.loggedin)
-    {
-        res.redirect("/login");
-        return;
-    }
+    // if (!req.session.loggedin)
+    // {
+    //     res.redirect("/login");
+    //     return;
+    // }
     if (req.body.albumName == null) 
     { 
         renderError(req,res,next, "No album name provided", 404);
@@ -279,7 +289,15 @@ function render_signup(req,res,next)
 
 function render_albumCreation(req,res,next)
 {
-    res.status(200).render("albumcreation");
+    switch (req.headers.accept)
+    {
+           case "application/json":
+            res.set('Content-Type', 'application/json').send("album created");
+               break;
+           default:
+            res.status(200).redirect("/album/" + req.body.albumName);
+               break;
+    }
 }
 
 
@@ -296,7 +314,12 @@ function render_album(req,res,next)
         renderError(req,res,next, "Album does not exist", 404);
         return;
     }
-    let response = Array.from(albums[req.params.albumName].processedImages);
+    let response = []; 
+    let array = Array.from(albums[req.params.albumName].images);
+    array = array.sort(( a, b) => {b.index - a.index}); 
+    for (let i = 0; i < array.length; i++) {
+        response.push(array[i].pathOrigin);
+    }
     if (req.headers.accept === "application/json")
     {
         res.status(200).send(response);
@@ -306,7 +329,11 @@ function render_album(req,res,next)
     for (let i = 0; i <response.length; i++) {
         response[i] = response[i].replace("./public", "");
     }
-    res.status(200).render("albumCreation", {album : response, albumName : req.params.albumName});
+    let gallery_images = fs.readdirSync("./public/img");
+    for (let i = 0; i <gallery_images.length; i++) {
+        gallery_images[i] = "/img/" + gallery_images[i];
+    }
+    res.status(200).render("albumCreation", {album : response, albumName : req.params.albumName, gallery : gallery_images});
 }
 
 function renderError(req,res,next, errorMessage = "Invalid Request", errorCode = 404 ){ //return a page with error message

@@ -19,7 +19,7 @@ head
 section#Titlebar
   .container-fluid
     .titlebar
-      h1=albumName
+      h1#Title=albumName
       .dashboardcontentbuttons
         details.WhiteButton
           summary Edit Name
@@ -44,14 +44,13 @@ section#Titlebar
       .modal-body
         .container-fluid
           #photogallery
-            .photo
-              each val in album ? album : []
-                .photo
-                  img(src=val)
-                  p=val.split('/')[val.split('/').length -1]
+            each val in gallery ? gallery : []
+              .photo(onclick="handleGalleryPhotoSelection(this)")
+                img(src=val)
+                p=val.split('/')[val.split('/').length -1]
       .modal-footer
-        button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
-        button.btn.btn-primary(type='button') Add images
+        button.btn.btn-secondary(type='button' data-bs-dismiss='modal' ) Close
+        button.btn.btn-primary(type='button' onclick="addImagesRequest()") Add images
 // This is supposed to be the modal that opens when 'Add Photos' is clicked. It allows the user to select photos from their gallery. Right now the modal body is empty minus a container-fluid bootstrap div that has the beginnings of a grid in it. When the page loads this should be dynamically populated.
 #openGallery.modal.fade(tabindex='-1' aria-labelledby='openGalleryLabel' aria-hidden='true')
   .modal-dialog.modal-lg.modal-dialog-centered.modal-dialog-scrollable
@@ -119,7 +118,7 @@ section#Titlebar
           label.form-label(for='similiaritythreshold') Similarity Threshold
           .range
           form(action="/duplicates/" + albumName method="POST")
-            input#similiaritythreshold.form-range(type='range' min='90' max='100' default='95' name='percentage' oninput='percentage.value=similiaritythreshold.value')
+            input#similiaritythreshold.form-range(type='range' min='90' max='100' name='similaritythresold' oninput='percentage.value=similiaritythreshold.value')
             output#percentage(name='percentage' for='similiaritythreshold') 95
             span % similarity
             .modal-footer
@@ -130,7 +129,7 @@ section#albumcreation
     #albumcreationcontainers.d-grid
       #container1.container-fluid
         .containername
-          h4 Album Name
+          h4=albumName
         #carousel.carousel-item.active
           img.testimonial-img(src='../public/sona.jpg' alt='profile')
           p sona.jpg
@@ -148,4 +147,4 @@ section#albumcreation
                 .photo
                   img(src=val)
                   p=val.split('/')[val.split('/').length -1]
-script(src='../public/scripts/albumcreation.js')
+script(src='/scripts/albumcreation.js')

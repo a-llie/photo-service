@@ -1,7 +1,31 @@
 doctype html
-html(lang="en")
-	head
-		meta(charset="UTF-8")
-		meta(name="viewport", content="width=device-width, initial-scale=1.0")
-		link(rel="stylesheet", href="login.css")
-		title Dashboard
+head
+	meta(charset='UTF-8')
+	meta(name='viewport' content='width=device-width, initial-scale=1.0')
+	title Create Your Album
+	link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor' crossorigin='anonymous')
+	link(rel='stylesheet' type='text/css' href='/album.css')
+	script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js' integrity='sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2' crossorigin='anonymous')
+	script(src='https://kit.fontawesome.com/58a61a6792.js' crossorigin='anonymous')
+	script(src='https://code.jquery.com/jquery-3.6.0.js')
+	script(src='https://code.jquery.com/ui/1.13.2/jquery-ui.js')
+	script(src='script.js')
+	// This is the sortable javascript module that allows reordering.
+	script(type='module').
+		import Sortable from 'https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/Sortable/Sortable.mjs';
+		const sortable = new Sortable(document.querySelectorAll('ul'), {
+		draggable: 'li',
+		});
+section#Titlebar
+	.container-fluid
+		.titlebar
+			h1 Dashboard
+			.dashboardcontentbuttons
+				details.WhiteButton
+					summary Create Album
+					form(action="/create" method="POST")
+						input(type="text" name="albumName" id="albumName" placeholder="Album Name" required=true).WhiteButton
+						button.BlackButton(type="submit" value="Submit") Submit
+
+
+

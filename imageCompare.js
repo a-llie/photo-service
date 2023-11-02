@@ -73,7 +73,7 @@ function comparePhotosArray(images, similarityThreshold = 0.15) {
 for (var i = 0; i < images.length - 1; i++) {
    for (var j = i+1; j < images.length; j++) {
      if (images[i].isDuplicate || images[j].isDuplicate) continue;
-     comparePhotos(images[i], images[j]);
+     comparePhotos(images[i], images[j], similarityThreshold);
    }
  }
 }
@@ -82,9 +82,14 @@ async function comparePhotos(img1, img2, similarityThreshold = 0.15)
 {
   var distance = Jimp.distance(img1, img2); // perceived distance
   var diff = Jimp.diff(img1, img2); // pixel difference
-  let percentDiff = 0.05;
-  if (similarityThreshold == 0 ) percentDiff = 0;
-  if ((distance < similarityThreshold && diff.percent < 0.4) || diff.percent < percentDiff) {
+  let orPercentDiff = 0.0499;
+  let andPercentDiff = 0.399;
+  if (similarityThreshold === 0.0 )
+  {
+    orPercentDiff = 0.0;
+    andPercentDiff = 0.0;
+  }
+  if ((distance <= similarityThreshold && diff.percent <= andPercentDiff) || diff.percent <= orPercentDiff) {
     img1.duplicates.add(img2.pathOrigin);
     img2.isDuplicate = true;
   }
