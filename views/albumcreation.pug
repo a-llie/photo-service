@@ -10,12 +10,6 @@ head
   script(src='https://code.jquery.com/jquery-3.6.0.js')
   script(src='https://code.jquery.com/ui/1.13.2/jquery-ui.js')
   script(src='script.js')
-  // This is the sortable javascript module that allows reordering.
-  script(type='module').
-    import Sortable from 'https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/Sortable/Sortable.mjs';
-    const sortable = new Sortable(document.querySelectorAll('ul'), {
-    draggable: 'li',
-    });
 section#Titlebar
   .container-fluid
     .titlebar
@@ -93,12 +87,13 @@ section#Titlebar
               |  Want some extra ways to show off your perfect album? You can share this
               |                                 album by downloading the photos or by purchasing a formatted real-life copy.
             input.form-control(type='text' placeholder="Recipient's email address" aria-label="Recipient's email address" aria-describedby='button-emailaddress')
-            button#button-emailaddress.btn.btn-outline-dark(type='button') Invite
+            button#button-emailaddress.btn.btn-outline-dark(type='button' onclick='alertFeedback(this)') Invite
           .input-group.mb-3
             input.form-control(type='text' disabled='disabled' placeholder='www.photoservice.com/album/1234567' aria-label='www.photoservice.com/album/1234567' aria-describedby='button-copylink')
-            button#button-copylink.btn.btn-dark(type='button') Copy Link
-          button.btn.btn-outline-dark.btn-share(type='button') Download Album (.zip)
-          button.btn.btn-outline-dark.btn-share(type='button') Purchase Album
+            button#button-copylink.btn.btn-dark(type='button' onclick='alertFeedback(this)') Copy Link
+          button#button-download.btn.btn-outline-dark.btn-share(type='button' onclick='alertFeedback(this)') Download Album (.zip)
+          button#button-purchase.btn.btn-outline-dark.btn-share(type='button' onclick='alertFeedback(this)') Purchase Album
+
 // This is the delete duplicates modal.
 #removeDuplicates.modal.fade(tabindex='-1' aria-labelledby='removeDuplicatesLabel' aria-hidden='true')
   .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
@@ -124,6 +119,34 @@ section#Titlebar
             .modal-footer
               button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
               button.btn.btn-primary(type='Submit') Remove Photos
+// This is the choose a face modal.
+#displayFaces.modal.fade(tabindex='-1' aria-labelledby='displayFacesLabel ' aria-hidden='true')
+  .modal-dialog.modal-lg.modal-dialog-centered.modal-dialog-scrollable
+    .modal-content
+      .modal-header
+        h1#removeDuplicatesLabel.modal-title.fs-5 Choose a Face From this Photo
+        button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+      .modal-body
+        .container-fluid
+          p
+            | Choose a face from this photo.
+            br
+            br
+            |  Select the person you want to add photos to this
+            |                             album of from your gallery.
+        #displayFacesSelection
+          .photo(onclick='handleFaceSelection(this)')
+            img(src='../public/zyra.jpg')
+            p Photo name
+          .photo(onclick='handleFaceSelection(this)')
+            img(src='../public/zyra.jpg')
+            p Photo name
+          .photo(onclick='handleFaceSelection(this)')
+            img(src='../public/zyra.jpg')
+            p Photo name
+      .modal-footer
+        button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
+        button.btn.btn-primary(type='button' onclick='sendFacesRequest()') Select
 section#albumcreation
   .container-fluid
     #albumcreationcontainers.d-grid
@@ -132,13 +155,13 @@ section#albumcreation
           h4=albumName
         #carousel.carousel-item.active
           if album[0] !== undefined
-            img.testimonial-img(src=album[0] alt='profile')
-            p=album[0].split('/')[album[0].split('/').length -1]
+            img#expandedimage.testimonial-img(src=album[0] alt='profile')
+            p#expandedimagelabel=album[0].split('/')[album[0].split('/').length -1]
           else
             p Images will appear here once you've added some to your album.
         .buttoncontainer
           .buttonoptions
-            button.WhiteButton Search Photo for Faces
+            button.WhiteButton(onclick='searchPhotoForFaces()') Search Photo for Faces
             button.BlackButton Delete Photo
       #container2.container-fluid
         #albumname.containername
@@ -146,8 +169,15 @@ section#albumcreation
         .d-grid
           ul
             each val in album ? album : []
-              li
+              li(onmouseover='expandImage(this)')
                 .photo
                   img(src=val)
                   p=val.split('/')[val.split('/').length -1]
 script(src='/scripts/albumcreation.js')
+// This is the sortable javascript module that allows reordering.
+script(type='module').
+  import Sortable from 'https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/Sortable/Sortable.mjs';
+  const sortable = new Sortable(document.querySelectorAll('ul'), {
+  draggable: 'li',
+  });
+  sortable.on('sortable:stop', () => sendReorderedArray());
