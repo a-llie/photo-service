@@ -100,3 +100,12 @@ function expandImage(element){
     document.getElementById("expandedimagelabel").textContent = element.querySelectorAll("div")[0].querySelectorAll("p")[0].textContent;
 }
 
+function sendFacesRequest(){
+    //insert HTTP request
+
+    //this shows the modal that needs the faces
+    var element = document.getElementById("displayFaces");
+
+    var modal = new bootstrap.Modal(element);
+    modal.show();
+}
