@@ -56,28 +56,6 @@ section#Titlebar
         button.btn.btn-primary#add-images-button(type='button' onclick="addImagesRequest()") Add images
         div.spinner-border#add-images-spinner(role="status" hidden="true")
           span.visually-hidden Loading
-// This is supposed to be the modal that opens when 'Add Photos' is clicked. It allows the user to select photos from their gallery. Right now the modal body is empty minus a container-fluid bootstrap div that has the beginnings of a grid in it. When the page loads this should be dynamically populated.
-#openGallery.modal.fade(tabindex='-1' aria-labelledby='openGalleryLabel' aria-hidden='true')
-  .modal-dialog.modal-lg.modal-dialog-centered.modal-dialog-scrollable
-    .modal-content
-      .modal-header
-        h1#openGalleryLabel.modal-title.fs-5
-          | Welcome to your gallery 
-          br
-          p Select images and press save to add them to your album.
-        button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
-      .modal-body
-        .container-fluid
-          #photogallery
-            each val in album ? album : []
-              .photo
-                img(src=val)
-                p=val.split('/')[val.split('/').length -1]
-      .modal-footer
-        button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
-        button.btn.btn-primary(type='button') Add images
-        div.spinner-border(role="status")
-          span.visually-hidden Loading
 //
   This is the share modal. It needs javascript for the invite button to show a little success message like 'Invite Sent'.
   Copy link also needs 'Link copied.'.
@@ -149,14 +127,7 @@ section#Titlebar
             |                             album of from your gallery.
         #displayFacesSelection
           .photo(onclick='handleFaceSelection(this)')
-            img(src='../public/zyra.jpg')
-            p Photo name
-          .photo(onclick='handleFaceSelection(this)')
-            img(src='../public/zyra.jpg')
-            p Photo name
-          .photo(onclick='handleFaceSelection(this)')
-            img(src='../public/zyra.jpg')
-            p Photo name
+            img(src='' hidden=true)
       .modal-footer
         button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
         button.btn.btn-primary(type='button' onclick='sendFacesRequest()') Select
@@ -174,7 +145,9 @@ section#albumcreation
             p Images will appear here once you've added some to your album.
         .buttoncontainer
           .buttonoptions
-            button.WhiteButton(onclick='searchPhotoForFaces()') Search Photo for Faces
+            button.WhiteButton#find-faces-button(onclick='searchPhotoForFaces()') Search Photo for Faces
+            div.spinner-border#find-faces-spinner(role="status" hidden="true")
+              span.visually-hidden Loading
             button.BlackButton(onclick='deleteImage()') Delete Photo
       #container2.container-fluid
         #albumname.containername

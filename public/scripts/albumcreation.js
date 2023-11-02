@@ -1,5 +1,6 @@
 let albumPhotoArray = [];
 let selectedPhotos = [];
+let selectedFaces = {}
 let albumName = document.getElementById("Title").innerText;
 let imagePath = './public/img/';
 
@@ -115,22 +116,65 @@ function expandImage(element){
 }
 
 function searchPhotoForFaces(){
-    //insert HTTP request
+    let photoID = document.getElementById("expandedimagelabel").innerText;
+    
+    let image = imagePath+photoID;
+    let query = "image="+image;
 
-    //this shows the modal that needs the faces
-    var element = document.getElementById("displayFaces");
-    var modal = new bootstrap.Modal(element);
-    modal.show();
+
+    let spinner = document.getElementById("find-faces-spinner");
+    let find_button = document.getElementById("find-faces-button");
+    spinner.hidden = false;
+    find_button.disabled = true;
+
+    let xhttp = new XMLHttpRequest();
+  	xhttp.onreadystatechange = function() {
+  		if(this.readyState==4){
+            if(this.status==200){
+                spinner.hidden = true;
+                find_button.disabled = false;
+                var element = document.getElementById("displayFaces");
+                var toPopulate = document.getElementById("displayFacesSelection");
+                while (toPopulate.firstChild) {
+                    toPopulate.removeChild(toPopulate.lastChild);
+                }
+                let dict = JSON.parse(xhttp.responseText);
+                let paths = Object.keys(JSON.parse(xhttp.responseText));
+                for (let i = 0; i <  paths.length; i++)
+                {
+                    var img = document.createElement("img");
+                    img.src = paths[i].replace("./public", "");
+                    img.alt = dict[paths[i]];
+                    img.classList.add("photo");
+                    img.onclick = function(){handleFaceSelection(this)};
+                    toPopulate.appendChild(img);
+                }
+                var modal = new bootstrap.Modal(element);
+                modal.show();
+            }
+            else{
+                alert("There was a problem with the server. Try again.");
+                location.reload();
+            }
+  		}
+  	};
+  	xhttp.open("GET", "/faces?" + query, true);
+  	xhttp.setRequestHeader("Content-Type", "application/json");
+  	xhttp.send(null);
+    
+    
 }
 
 function handleFaceSelection(element){
     let gallery = document.getElementById("displayFacesSelection");
     for(var i = 0; i < gallery.querySelectorAll("div").length; i++){
         if(gallery.querySelectorAll("div")[i].classList.contains("selected")){
-            gallery.querySelectorAll("div")[i].classList.toggle("selected");
+            gallery.querySelectorAll("div")[i].classList.remove("selected");
         }
     }
     console.log("Photo selected.");
     element.classList.toggle("selected");  
+    selectedFaces = {};
+    selectedFaces["./public/" + element.src] = element.alt;
 }
 
