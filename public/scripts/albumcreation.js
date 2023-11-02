@@ -1,9 +1,10 @@
 let albumPhotoArray = [];
 let selectedPhotos = [];
 let albumName = document.getElementById("Title").innerText;
+let imagePath = './public/img/';
 
 function handleGalleryPhotoSelection(element){
-    console.log("Photo selected.");
+    console.log("Photo selåected.");
     element.classList.toggle("selected");
 }
 
@@ -71,11 +72,14 @@ function sendReorderedArray(){
 }
 
 function deleteImage(){
-    let photoID = document.getElementById("expandedimagelabel");
+    let photoID = document.getElementById("expandedimagelabel").innerText;
     
     let object = {};
     object.albumName = albumName;
-    object.images = [photoID];
+    let image = imagePath+photoID;
+    object.images = [image];
+    console.log(image);
+    console.log(object);
 
     let xhttp = new XMLHttpRequest();
   	xhttp.onreadystatechange = function() {
@@ -96,7 +100,6 @@ function deleteImage(){
 }
 
 function expandImage(element){
-    console.log("Image expanded.")
     document.getElementById("expandedimage").setAttribute("src", element.querySelectorAll("div")[0].querySelectorAll("img")[0].getAttribute("src"));
     document.getElementById("expandedimagelabel").textContent = element.querySelectorAll("div")[0].querySelectorAll("p")[0].textContent;
 }
