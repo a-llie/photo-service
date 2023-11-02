@@ -229,3 +229,6 @@ border: 1px solid var(--Secondary, #9BA5B7);
     margin-bottom: 0px!important;
 }
 
+details{
+    float: left;
+}
