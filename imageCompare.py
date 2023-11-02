@@ -140,12 +140,12 @@ returns an array of face encodings
 
 
 def find_faces_in_folder(path):
-    image_paths = path
+    image_paths = os.listdir(path)
 
     faces = []
     i = 0
     for image in image_paths:
-        img = face_recognition.load_image_file(image)
+        img = face_recognition.load_image_file("./public/img/" + image)
         face_locations = face_recognition.face_locations(img)
 
         for face_location in face_locations:
@@ -157,7 +157,7 @@ def find_faces_in_folder(path):
             new_path = f"./public/saved_imgs/img_{i}.jpg"
             pil_image.save(new_path)
 
-            face = create_face_encoding(new_path, image)
+            face = create_face_encoding(new_path, "./public/img/" + image)
             if face is not None:
                 faces.append(face)
                 i += 1
@@ -246,8 +246,7 @@ def main():
         print(find_all_faces_in_image(sys.argv[2]))
     if sys.argv[1] == "find_photos_of_person":
         ref_face = create_face_encoding(sys.argv[2], sys.argv[3])
-        folder = sys.argv[4].split(',')
-        compare_faces = find_faces_in_folder(folder)
+        compare_faces = find_faces_in_folder("./public/img")
         result = find_all_matches(ref_face, compare_faces)
         print(list(result))
 

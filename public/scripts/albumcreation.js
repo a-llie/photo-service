@@ -165,16 +165,53 @@ function searchPhotoForFaces(){
     
 }
 
+
+
+function sendFacesRequest(){
+
+    let spinner = document.getElementById("find-person-spinner");
+    let find_button = document.getElementById("find-person-button");
+    let close_button = document.getElementById("find-person-close-button");
+    let albumName = document.getElementById("Title").innerText;
+    spinner.hidden = false;
+    find_button.disabled = true;
+    close_button.disabled = true;
+
+    let image = Object.keys(selectedFaces)[0];
+    let source_image = selectedFaces[image];
+    let query = "image="+image+"&source_image="+source_image+"&albumName="+albumName;
+
+    let xhttp = new XMLHttpRequest();
+  	xhttp.onreadystatechange = function() {
+  		if(this.readyState==4){
+            if(this.status==200){
+                spinner.hidden = true;
+                
+                alert("Added images successfully.");
+                location.reload();
+            }
+            else{
+                alert("There was a problem with the server. Try again.");
+                location.reload();
+            }
+  		}
+  	};
+  	xhttp.open("GET", "/personPhotos?" + query, true);
+  	xhttp.setRequestHeader("Content-Type", "application/json");
+  	xhttp.send(null);
+}
+
 function handleFaceSelection(element){
     let gallery = document.getElementById("displayFacesSelection");
-    for(var i = 0; i < gallery.querySelectorAll("div").length; i++){
-        if(gallery.querySelectorAll("div")[i].classList.contains("selected")){
-            gallery.querySelectorAll("div")[i].classList.remove("selected");
+    let children = gallery.children;
+    for(var i = 0; i < children.length; i++){
+        if(children[i].classList.contains("selected")){
+            children[i].classList.toggle("selected");
         }
     }
     console.log("Photo selected.");
-    element.classList.toggle("selected");  
+    element.classList.add("selected");  
     selectedFaces = {};
-    selectedFaces["./public/" + element.src] = element.alt;
+    selectedFaces["./public/" + (element.src).replace("http://127.0.0.1:3000/", "")] = element.alt;
 }
 

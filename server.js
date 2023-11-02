@@ -27,6 +27,7 @@ function User_FindFacesInPhoto(req,res,next)
         console.log(`child process exited with code ${code}`);
     // send data to browser
     console.log(response);
+
     response = response.replace(/'/gm, '"');
     response = JSON.parse(response);
     res.send(response);
@@ -35,10 +36,14 @@ function User_FindFacesInPhoto(req,res,next)
 
 function User_FindPhotosOfPerson(req,res,next)
 {
-    let image = req.body.image;
-    let source_image = req.body.source_image;
-    let folder = req.body.album;
+    let image = req.query.image;
+    let source_image = req.query.source_image;
+    let folder = req.query.albumName;
     var response;
+
+    console.log("image: " + image);
+    console.log("source_image: " + source_image);
+    console.log("folder: " + folder);
 
     if (image == null || source_image == null || folder == null)
     {
@@ -46,19 +51,27 @@ function User_FindPhotosOfPerson(req,res,next)
         return;
     }
 
-    let folder_images =Array.from(albums[folder].processedImages);
-    const python = spawn('python', ['imageCompare.py', 'find_photos_of_person', image, source_image, folder_images]);
+    //let folder_images = Array.from(albums[folder].processedImages);
+    const python = spawn('python', ['imageCompare.py', 'find_photos_of_person', image, source_image]);
     // collect data from script
     python.stdout.on('data', function (data) {
         console.log('Pipe data from python script ...');
         response = data.toString();
+        console.log(response);
     });
     python.on('close', (code) => {
-    console.log(`child process exited with code ${code}`);
-    // send data to browser
-    response = response.replace(/'/gm, '"');
-    response = JSON.parse(response);
-    res.send(response)
+        console.log(`child process exited with code ${code}`);
+        console.log(response);
+        // send data to browser
+        if (response === "[]" || response === undefined)
+        {
+            res.status(404).send("No photos found");
+            return;
+        }
+        response = response.replace(/'/gm, '"');
+        response = JSON.parse(response);
+        AddImagesToAlbum(req.query.albumName, response);
+        res.status(200).send("Images added to album.");
  });
 }
 
@@ -165,7 +178,6 @@ function User_ChangeAlbumName(req,res,next)
     delete albums[decodeURIComponent(req.params.albumName)];
     res.status(200).redirect("/album/" + req.body.albumName);
 }
-
 
 async function User_AddImagesToAlbum(req,res,next)
 {

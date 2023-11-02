@@ -129,8 +129,11 @@ section#Titlebar
           .photo(onclick='handleFaceSelection(this)')
             img(src='' hidden=true)
       .modal-footer
-        button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
-        button.btn.btn-primary(type='button' onclick='sendFacesRequest()') Select
+        button.btn.btn-secondary#find-person-close-button(type='button' data-bs-dismiss='modal') Close
+        button.btn.btn-primary#find-person-button(type='button' onclick='sendFacesRequest()') Select
+        div.spinner-border#find-person-spinner(role="status" hidden="true")
+          span.visually-hidden Loading
+
 section#albumcreation
   .container-fluid
     #albumcreationcontainers.d-grid
@@ -145,10 +148,11 @@ section#albumcreation
             p Images will appear here once you've added some to your album.
         .buttoncontainer
           .buttonoptions
-            button.WhiteButton#find-faces-button(onclick='searchPhotoForFaces()') Search Photo for Faces
-            div.spinner-border#find-faces-spinner(role="status" hidden="true")
-              span.visually-hidden Loading
-            button.BlackButton(onclick='deleteImage()') Delete Photo
+            if (album[0] !== undefined)
+              button.WhiteButton#find-faces-button(onclick='searchPhotoForFaces()') Search Photo for Faces
+              div.spinner-border#find-faces-spinner(role="status" hidden="true")
+                span.visually-hidden Loading
+              button.BlackButton(onclick='deleteImage()') Delete Photo
       #container2.container-fluid
         #albumname.containername
           h4=albumName
