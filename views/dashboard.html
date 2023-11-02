@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-    crossorigin="anonymous"></script>
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../public/dashboardstyles.css">
 
     <title>Document</title>
 </head>
+
 <body>
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none" id="logo">
-            <span class="fs-4">PhotoService</span>
-          </a>
+            <a href="/"
+                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+                id="logo">
+                <span class="fs-4">PhotoService</span>
+            </a>
         </header>
-      </div>
+    </div>
 
-      <div class="dashboard">
+    <div class="dashboard">
         <div class="sidebar">
             <div class="UserInfo">
                 <img src="../public/brand.jpg">
@@ -29,39 +33,49 @@
             </div>
             <ul class="nav nav-pills flex-column mb-auto" id="sidebarlinks">
                 <li class="nav-item">
-                  <a href="#" class="nav-link active" >
-                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#"/></svg>
-                    Dashboard
-                  </a>
+                    <a href="#" class="nav-link active">
+                        <svg class="bi me-2" width="16" height="16">
+                            <use xlink:href="#" />
+                        </svg>
+                        Dashboard
+                    </a>
                 </li>
                 <li>
-                  <a href="#" class="nav-link" >
-                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#"/></svg>
-                    Gallery
-                  </a>
+                    <a href="#" class="nav-link">
+                        <svg class="bi me-2" width="16" height="16">
+                            <use xlink:href="#" />
+                        </svg>
+                        Gallery
+                    </a>
                 </li>
                 <li>
-                  <a href="#" class="nav-link" >
-                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#t"/></svg>
-                    Orders
-                  </a>
+                    <a href="#" class="nav-link">
+                        <svg class="bi me-2" width="16" height="16">
+                            <use xlink:href="#t" />
+                        </svg>
+                        Orders
+                    </a>
                 </li>
                 <li>
-                  <a href="#" class="nav-link" >
-                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#"/></svg>
-                    Account
-                  </a>
+                    <a href="#" class="nav-link">
+                        <svg class="bi me-2" width="16" height="16">
+                            <use xlink:href="#" />
+                        </svg>
+                        Account
+                    </a>
                 </li>
                 <li>
-                  <a href="#" class="nav-link link-secondary" >
-                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#"/></svg>
-                    Logout
-                  </a>
+                    <a href="#" class="nav-link link-secondary">
+                        <svg class="bi me-2" width="16" height="16">
+                            <use xlink:href="#" />
+                        </svg>
+                        Logout
+                    </a>
                 </li>
-              </ul>
-          </div>
-          
-          <div class="dashboardcontent">
+            </ul>
+        </div>
+
+        <div class="dashboardcontent">
             <div class="contentcontainer">
                 <div class="titlebar">
                     <h1>Connections</h1>
@@ -83,51 +97,58 @@
                 <div class="titlebar">
                     <h1>Albums</h1>
                     <div class="dashboardcontentbuttons">
-                        <button class="WhiteButton">Add</button>
-                        <button class="BlackButton">Delete</button>
+                        <details class="WhiteButton">
+                            <summary>Create Album</summary>
+                            <form action="/create" method="POST"><input class="WhiteButton" type="text" name="albumName"
+                                    id="albumName" placeholder="Album Name" required><button class="BlackButton"
+                                    type="submit" value="Submit">Submit</button></form>
+                        </details>
                     </div>
-                </div>
-                <div class="albumscontainer">
-                    <div class="album">
-                        <img src="brand.jpg">
-                        <p>Album Name</p>
-                    </div>
-                    <div class="album">
-                        <img src="brand.jpg">
-                        <p>Album Name</p>
-                    </div>
-                    <div class="album">
-                        <img src="brand.jpg">
-                        <p>Album Name</p>
-                    </div>
-                    <div class="album">
-                        <img src="brand.jpg">
-                        <p>Album Name</p>
-                    </div>
-                    <div class="album">
-                        <img src="brand.jpg">
-                        <p>Album Name</p>
-                    </div>
-                    <div class="album">
-                        <img src="brand.jpg">
-                        <p>Album Name</p>
-                    </div>
-                    <div class="album">
-                        <img src="brand.jpg">
-                        <p>Album Name</p>
-                    </div>
-                    <div class="album">
-                        <img src="brand.jpg">
-                        <p>Album Name</p>
-                    </div>
-
-                </div>
+                </section>
             </div>
-          </div>
-      </div>
-     
-    
-      <script src="../public/scripts/dashboard.js"></script>
+        </div>
+        <div class="albumscontainer">
+            <div class="album">
+                <img src="brand.jpg">
+                <p>Album Name</p>
+            </div>
+            <div class="album">
+                <img src="brand.jpg">
+                <p>Album Name</p>
+            </div>
+            <div class="album">
+                <img src="brand.jpg">
+                <p>Album Name</p>
+            </div>
+            <div class="album">
+                <img src="brand.jpg">
+                <p>Album Name</p>
+            </div>
+            <div class="album">
+                <img src="brand.jpg">
+                <p>Album Name</p>
+            </div>
+            <div class="album">
+                <img src="brand.jpg">
+                <p>Album Name</p>
+            </div>
+            <div class="album">
+                <img src="brand.jpg">
+                <p>Album Name</p>
+            </div>
+            <div class="album">
+                <img src="brand.jpg">
+                <p>Album Name</p>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+    <script src="../public/scripts/dashboard.js"></script>
 
 </body>
+
 </html>
