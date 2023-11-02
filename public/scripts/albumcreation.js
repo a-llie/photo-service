@@ -23,11 +23,17 @@ function addImagesRequest(){
     let object = {};
     object.albumName = albumName;
     object.images = photosToAdd;
-
+    let spinner = document.getElementById("add-images-spinner");
+    let add_button = document.getElementById("add-images-button");
+    let close_button = document.getElementById("add-images-close-button");
+    spinner.hidden = false;
+    add_button.disabled = true;
+    close_button.disabled = true;
     let xhttp = new XMLHttpRequest();
   	xhttp.onreadystatechange = function() {
   		if(this.readyState==4){
             if(this.status==200){
+                spinner.hidden = true;
                 alert("Added images successfully.");
                 location.reload(); //reloads the page
             }
