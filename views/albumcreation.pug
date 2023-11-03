@@ -103,14 +103,15 @@ section#Titlebar
             | Use the slider below to set the similarity threshold. A value of 100% ensures only identical photos will be removed.
           label.form-label(for='similiaritythreshold') Similarity Threshold
           .range
-          form(action="/duplicates/" + albumName method="POST")
-            input#similiaritythreshold.form-range(type='range' min='90' max='100' name='similaritythresold' oninput='percentage.value=similiaritythreshold.value')
-            output#percentage(name='percentage' for='similiaritythreshold') 95
-            span % similarity
-            .modal-footer
-              button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
-              button.btn.btn-primary(type='Submit') Remove Photos
-// This is the facial match modal that opens when 'Scan and Find Faces' is clicked. The user is presented with faces in the photo they are currently on and chooses one. Photos with that face are automatically added to the album from the gallery.
+          input#similiaritythreshold.form-range(type='range' min='90' max='100' name='similaritythresold' oninput='percentage.value=similiaritythreshold.value')
+          output#percentage(name='percentage' for='similiaritythreshold') 95
+          span % similarity
+          .modal-footer
+          button.btn.btn-secondary#remove-duplicates-close-button(type='button' data-bs-dismiss='modal') Close
+          button.btn.btn-primary#remove-duplicates-button(type='Button' onClick="removeDuplicates()") Remove Photos
+          div.spinner-border#remove-duplicates-spinner(role="status" hidden="true")
+            span.visually-hidden Loading
+// This is the choose a face modal.
 #displayFaces.modal.fade(tabindex='-1' aria-labelledby='displayFacesLabel ' aria-hidden='true')
   .modal-dialog.modal-lg.modal-dialog-centered.modal-dialog-scrollable
     .modal-content

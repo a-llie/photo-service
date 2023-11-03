@@ -90,21 +90,6 @@ function sendReorderedArray(){
     let object = {};
     object.albumName = document.getElementById("Title");
     object.images = albumPhotoArray;
-
-    // let xhttp = new XMLHttpRequest();
-  	// xhttp.onreadystatechange = function() {
-  	// 	if(this.readyState==4){
-    //         if(this.status==200){
-    //         }
-    //         else{
-    //             //alert("There was a problem with the server. Try again.");
-    //             //location.reload();
-    //         }
-  	// 	}
-  	// };
-  	// xhttp.open("POST", "/reorder", true);
-  	// xhttp.setRequestHeader("Content-Type", "application/json");
-  	// xhttp.send(JSON.stringify(object));
 }
 
 //this function deletes an image from an album
@@ -193,7 +178,40 @@ function searchPhotoForFaces(){
     
 }
 
-//this function runs after a user has selected which face they want to run facial match on.
+
+function removeDuplicates()
+{
+    let albumName = document.getElementById("Title").innerText;
+    let object = {};
+    object.similaritythresold = document.getElementById("similiaritythreshold").value;
+    object.albumName = albumName;
+    let spinner = document.getElementById("remove-duplicates-spinner");
+    let remove_button = document.getElementById("remove-duplicates-button");
+    let close_button = document.getElementById("remove-duplicates-close-button");
+    console.log("Similarity: " + object.similaritythresold);
+    spinner.hidden = false;
+    remove_button.disabled = true;
+    close_button.disabled = true;
+    let xhttp = new XMLHttpRequest();
+  	xhttp.onreadystatechange = function() {
+  		if(this.readyState==4){
+            if(this.status==200){
+                spinner.hidden = true;
+                alert("Removed duplicates successfully.");
+                location.reload(); //reloads the page
+            }
+            else{
+                alert("There was a problem with the server. Try again.");
+                location.reload();
+            }
+  		}
+  	};
+  	xhttp.open("POST", "/duplicates/"+albumName, true);
+  	xhttp.setRequestHeader("Content-Type", "application/json");
+  	xhttp.send(JSON.stringify(object));
+}
+
+
 function sendFacesRequest(){
 
     let spinner = document.getElementById("find-person-spinner");
