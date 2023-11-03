@@ -95,47 +95,5 @@ async function comparePhotos(img1, img2, similarityThreshold = 0.15)
   }
 }
 
-async function inputLoop(){
-  r1.question("\nUse: \n  'create'  -> create new album \n  'add'     -> add images to album\n  'compare' -> find duplicates in album\n\n>> ", answer => { 
-    if (answer == 'create'){
-      r1.question("album Name: ", albumName => {
-        CreateNewAlbum(albumName);
-        inputLoop();
-      });
-    }
-    else if (answer == 'add'){
-        r1.question("album Name: >> ", albumName => {
-            r1.question("Images folder: >> ", images => {
-              AddImagesToAlbum(albumName, images).then(() => { inputLoop(); });
-              
-            });
-        });
-      }
-      else if (answer == 'compare'){
-        r1.question("album Name: >> ", albumName => {
-          comparePhotosArray(albums[albumName].images);
-          console.log("Duplicate groups: ");
-          let duplicates = [];
-          for (let i = 0; i < albums[albumName].images.length; i++) {
-            if (albums[albumName].images[i].duplicates.size == 0) continue;
-            console.log("\n");
-            console.log(albums[albumName].images[i].pathOrigin);
-            let dupes_group = [];
-            dupes_group.push(albums[albumName].images[i].pathOrigin);
-            for (const el of albums[albumName].images[i].duplicates) 
-            {
-              console.log(el);
-              dupes_group.push(el);
-            }
-            return dupes_group;
-          }
-          inputLoop();
-        });
-      }
-    else inputLoop();
-    });
-}
-
-
 
 module.exports =  {albums, CreateNewAlbum, AddImagesToAlbum, comparePhotosArray, comparePhotos, deleteImagesFromAlbum};

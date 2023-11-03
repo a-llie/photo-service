@@ -172,7 +172,7 @@ function User_ChangeAlbumName(req,res,next)
     let existing_keys = Object.keys(albums)
     for (key in existing_keys)
     {
-        if (key.toLowerCase().localeCompare((decodeURIComponent(req.body.albumName)).toLowerCase()))
+        if (key.toLowerCase() === ((decodeURIComponent(req.body.albumName)).toLowerCase()))
         {
             renderError(req,res,next, "album already exists", 404);
             return;
