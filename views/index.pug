@@ -2,7 +2,7 @@ doctype html
 head
   meta(charset='UTF-8')
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  title Photo Service
+  title Document
   // CSS
   link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor' crossorigin='anonymous')
   link(rel='stylesheet' href='styles.css')
@@ -31,7 +31,8 @@ section#landingcontainer
       | Create your perfect album.
     .buttoncontainer
       button.BlackButton Register
-      button.WhiteButton Login
+      button.WhiteButton
+        a(href='/login') Login
 section#AboutUs
   .row
     .col-lg-3.whatweoffer-column
@@ -60,7 +61,7 @@ section#carousel
         h2
           | I no longer have to manually look through every cloud drive. I&apos;ve found the best way to make albums here.
       .carousel-item
-        img.testimonial-img(src='defaultuser.jpeg' alt='profile')
+        img.testimonial-img(src='../public/defaultuser.jpeg' alt='profile')
         p Zyra, Mississauga
         h2.testimonial-text
           | I couldn&apos;t find a way to sort through all my photos, but with PhotoService I can!

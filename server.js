@@ -93,7 +93,7 @@ function server(){
     app.use(bodyParser.json());
     app.use(express.urlencoded({ extended: true }));
 
-    app.get("/", render_dashboard);
+    app.get("/", render_homepage);
     app.get("/login", render_login);
     app.get("/signup", render_signup);
     app.get("/dashboard",  render_dashboard);
@@ -297,6 +297,12 @@ function images_delete_response(req,res,next)
 function render_login(req,res,next)
 {
     res.status(200).render("login.pug");
+    next();
+}
+
+function render_homepage(req,res,next)
+{
+    res.status(200).render("index.pug");
     next();
 }
 
