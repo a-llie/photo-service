@@ -4,11 +4,13 @@ let selectedFaces = {}
 let albumName = document.getElementById("Title").innerText;
 let imagePath = './public/img/';
 
+//this function allows users to select and unselect a photo in their gallery
 function handleGalleryPhotoSelection(element){
     console.log("Photo selåected.");
     element.classList.toggle("selected");
 }
 
+//this function adds photos to an album when the user has confirmed their selection from their gallery
 function addImagesRequest(){
     let photosToAdd=[];
     let gallery = document.getElementById("photogallery");
@@ -49,26 +51,30 @@ function addImagesRequest(){
   	xhttp.send(JSON.stringify(object));
 }
 
-
+//this function alerts users that their collaborator invite was emailed
 function inviteSent(){
     alert("Invite sent successfully.")
 }
 
+//this function alerts users that their album link was copied
 function linkCopied(){
     alert("Link copied successfully.")
 
 }
 
+//this function alerts users that their download has begun.
 function download(){
     alert("Download started successfully.")
 
 }
 
+//this function alerts users that their purchase has occurred.
 function purchase(){
     alert("Album purchased.")
 
 }
 
+//this function alerts the server that the album images were reordered
 function sendReorderedArray(){
     let albumPhotoArray = [];
     let photoDivs = [];
@@ -101,6 +107,7 @@ function sendReorderedArray(){
   	// xhttp.send(JSON.stringify(object));
 }
 
+//this function deletes an image from an album
 function deleteImage(){
     let photoID = document.getElementById("expandedimagelabel").innerText;
     
@@ -129,11 +136,13 @@ function deleteImage(){
   	xhttp.send(JSON.stringify(object));
 }
 
+//this function expands an album image on mouseover to the div on the left
 function expandImage(element){
     document.getElementById("expandedimage").setAttribute("src", element.querySelectorAll("div")[0].querySelectorAll("img")[0].getAttribute("src"));
     document.getElementById("expandedimagelabel").textContent = element.querySelectorAll("div")[0].querySelectorAll("p")[0].textContent;
 }
 
+//this function scans a photo for faces and opens up a modal to proceed with next steps
 function searchPhotoForFaces(){
     let photoID = document.getElementById("expandedimagelabel").innerText;
     
@@ -184,8 +193,7 @@ function searchPhotoForFaces(){
     
 }
 
-
-
+//this function runs after a user has selected which face they want to run facial match on.
 function sendFacesRequest(){
 
     let spinner = document.getElementById("find-person-spinner");
@@ -220,6 +228,7 @@ function sendFacesRequest(){
   	xhttp.send(null);
 }
 
+//this function allows a user to select which face they want to run facial match using a toggle select in the modal
 function handleFaceSelection(element){
     let gallery = document.getElementById("displayFacesSelection");
     let children = gallery.children;
