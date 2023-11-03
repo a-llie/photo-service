@@ -1,3 +1,4 @@
+//This .pug file is for dynamic rendering of the album creation page, where users create their perfect album.
 doctype html
 head
   meta(charset='UTF-8')
@@ -5,10 +6,12 @@ head
   title Create Your Album
   link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor' crossorigin='anonymous')
   link(rel='stylesheet' type='text/css' href='/album.css')
+  //bootstrap style sheet
   script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js' integrity='sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2' crossorigin='anonymous')
   script(src='https://kit.fontawesome.com/58a61a6792.js' crossorigin='anonymous')
   script(src='https://code.jquery.com/jquery-3.6.0.js')
   script(src='https://code.jquery.com/ui/1.13.2/jquery-ui.js')
+  //this is the header and contains a logo, link to the dashboard, and logout button
 .container
   header.d-flex.flex-wrap.justify-content-center.py-3.mb-4.border-bottom
     a.d-flex.align-items-center.mb-3.mb-md-0.me-md-auto.link-body-emphasis.text-decoration-none(href='/')
@@ -21,6 +24,7 @@ head
           | Dashboard
       div.nav-item.text-black
         a.nav-link(href='#') Logout
+  //this shows the album name and has buttons to edit the name, add photos to the album, remove duplicates from the album, and share the album.
 section#Titlebar
   .container-fluid
     .titlebar
@@ -40,7 +44,7 @@ section#Titlebar
             path(fill-rule='evenodd' d='M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708zm0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708z')
           | Remove Duplicates
         button.BlackButton(data-bs-toggle='modal' data-bs-target='#shareModal') Share
-// This is supposed to be the modal that opens when 'Add Photos' is clicked. It allows the user to select photos from their gallery. Right now the modal body is empty minus a container-fluid bootstrap div that has the beginnings of a grid in it. When the page loads this should be dynamically populated.
+// This is supposed to be the modal that opens when 'Add Photos' is clicked. It allows the user to select photos from their gallery.
 #openGallery.modal.fade(tabindex='-1' aria-labelledby='openGalleryLabel' aria-hidden='true')
   .modal-dialog.modal-lg.modal-dialog-centered.modal-dialog-scrollable
     .modal-content
@@ -62,10 +66,7 @@ section#Titlebar
         button.btn.btn-primary#add-images-button(type='button' onclick="addImagesRequest()") Add images
         div.spinner-border#add-images-spinner(role="status" hidden="true")
           span.visually-hidden Loading
-//
-  This is the share modal. It needs javascript for the invite button to show a little success message like 'Invite Sent'.
-  Copy link also needs 'Link copied.'.
-  Download album can have 'Album download starting.'
+// This is the modal that opens when 'Share' is clicked. It allows the user to input email addresses to invite friends as collaborators, copy a link to the album, download the album as a zip and purchase the album.
 #shareModal.modal.fade(tabindex='-1' aria-labelledby='shareModalLabel' aria-hidden='true')
   .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
     .modal-content
@@ -86,8 +87,7 @@ section#Titlebar
             button#button-copylink.btn.btn-dark(type='button' onclick='linkCopied()') Copy Link
           button#button-download.btn.btn-outline-dark.btn-share(type='button' onclick='download()') Download Album (.zip)
           button#button-purchase.btn.btn-outline-dark.btn-share(type='button' onclick='purchase()') Purchase Album
-
-// This is the delete duplicates modal.
+// This is the modal that opens when 'Remove Duplicates' is clicked. It allows the user to use a slider to choose how identiical an image must be to be considered a duplicate, and then automatically removes them from the album.
 #removeDuplicates.modal.fade(tabindex='-1' aria-labelledby='removeDuplicatesLabel' aria-hidden='true')
   .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
     .modal-content
@@ -110,7 +110,7 @@ section#Titlebar
             .modal-footer
               button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
               button.btn.btn-primary(type='Submit') Remove Photos
-// This is the choose a face modal.
+// This is the facial match modal that opens when 'Scan and Find Faces' is clicked. The user is presented with faces in the photo they are currently on and chooses one. Photos with that face are automatically added to the album from the gallery.
 #displayFaces.modal.fade(tabindex='-1' aria-labelledby='displayFacesLabel ' aria-hidden='true')
   .modal-dialog.modal-lg.modal-dialog-centered.modal-dialog-scrollable
     .modal-content
@@ -129,7 +129,8 @@ section#Titlebar
         button.btn.btn-primary#find-person-button(type='button' onclick='sendFacesRequest()') Select
         div.spinner-border#find-person-spinner(role="status" hidden="true")
           span.visually-hidden Loading
-
+//the div on the left shows an expanded version of a selected image on the right          
+//the div on the right shows all images in the album. these images can be reordered by dragging and dropping.          
 section#albumcreation
   .container-fluid
     #albumcreationcontainers.d-grid
@@ -163,7 +164,7 @@ section#albumcreation
                   img(src=val)
                   p=val.split('/')[val.split('/').length -1]
 script(src='/scripts/albumcreation.js')
-// This is the sortable javascript module that allows reordering.
+// This is the sortable javascript module that allows reordering of album images.
 script(type='module').
   import Sortable from 'https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/Sortable/Sortable.mjs';
   const sortable = new Sortable(document.querySelectorAll('ul'), {
