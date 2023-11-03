@@ -17,7 +17,7 @@ head
       div.nav-item.text-black
         a.nav-link(href='/dashboard')
           svg.bi.bi-house-door-fill.headericon(xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewbox='0 0 16 16')
-              path(d='M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z')
+            path(d='M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z')
           | Dashboard
       div.nav-item.text-black
         a.nav-link(href='#') Logout
@@ -145,7 +145,7 @@ section#albumcreation
     #albumcreationcontainers.d-grid
       #container1.container-fluid
         .containername
-          h4=albumName
+          h4
         #carousel.carousel-item.active
           if album[0] !== undefined
             img#expandedimage.testimonial-img(src=album[0] alt='profile')
@@ -166,7 +166,7 @@ section#albumcreation
         #albumname.containername
           h4=albumName
         .d-grid
-          ul
+          ul#albumphotos
             each val in album ? album : []
               li(onmouseover='expandImage(this)')
                 .photo

@@ -74,12 +74,29 @@ function sendReorderedArray(){
     let photoDivs = [];
     photoDivs = document.getElementById("albumphotos").querySelectorAll("li");
     console.log(document.getElementById("albumphotos"));
+    console.log(photoDivs);
 
-    for(var i = 0; i < photoDivs.length; i++){
-        albumPhotoArray.push(photoDivs[i].querySelectorAll("div")[0].querySelectorAll("p")[0].innerText);
-    }
-    
-    console.log(albumPhotoArray);
+    let object = {};
+    object.albumName = document.getElementById("Title");
+    object.images = albumPhotoArray;
+
+    let xhttp = new XMLHttpRequest();
+  	xhttp.onreadystatechange = function() {
+  		if(this.readyState==4){
+            if(this.status==200){
+                spinner.hidden = true;
+                alert("Added images successfully.");
+                location.reload(); //reloads the page
+            }
+            else{
+                alert("There was a problem with the server. Try again.");
+                location.reload();
+            }
+  		}
+  	};
+  	xhttp.open("POST", "/reorder", true);
+  	xhttp.setRequestHeader("Content-Type", "application/json");
+  	xhttp.send(JSON.stringify(object));
 }
 
 function deleteImage(){

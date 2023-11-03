@@ -41,10 +41,6 @@ function User_FindPhotosOfPerson(req,res,next)
     let folder = req.query.albumName;
     var response;
 
-    console.log("image: " + image);
-    console.log("source_image: " + source_image);
-    console.log("folder: " + folder);
-
     if (image == null || source_image == null || folder == null)
     {
         res.status(404).send("Criteria not provided: image, source_image, album");
@@ -108,6 +104,7 @@ function server(){
     app.post("/create", User_CreateNewAlbum, render_albumCreation);
     app.post("/album", User_AddImagesToAlbum);
     app.post("/album/:albumName", User_ChangeAlbumName);
+    app.post("/reorder", User_ReorderImages)
     
     app.delete("/album", User_DeleteImages, images_delete_response);
 
@@ -288,6 +285,15 @@ function User_DeleteImages(req,res,next)
     next();
 }
 
+
+function User_ReorderImages(req,res,next)
+{
+    console.log(JSON.parse(req.body.images));
+    console.log(JSON.parse(req.body.albumName));
+
+
+    res.status(200).send("Images Reordered");
+}
 
 function images_delete_response(req,res,next)
 {
