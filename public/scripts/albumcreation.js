@@ -70,33 +70,35 @@ function purchase(){
 }
 
 function sendReorderedArray(){
-    albumPhotoArray = [];
+    let albumPhotoArray = [];
     let photoDivs = [];
     photoDivs = document.getElementById("albumphotos").querySelectorAll("li");
     console.log(document.getElementById("albumphotos"));
-    console.log(photoDivs);
+
+    for (let i = 0; i < photoDivs.length; i++)
+    {
+        console.log("./public" + (photoDivs[i].firstChild.firstChild.src).replace("http://127.0.0.1:3000",""));
+        albumPhotoArray.push("./public" + (photoDivs[i].firstChild.firstChild.src).replace("http://127.0.0.1:3000",""));
+    }
 
     let object = {};
     object.albumName = document.getElementById("Title");
     object.images = albumPhotoArray;
 
-    let xhttp = new XMLHttpRequest();
-  	xhttp.onreadystatechange = function() {
-  		if(this.readyState==4){
-            if(this.status==200){
-                spinner.hidden = true;
-                alert("Added images successfully.");
-                location.reload(); //reloads the page
-            }
-            else{
-                alert("There was a problem with the server. Try again.");
-                location.reload();
-            }
-  		}
-  	};
-  	xhttp.open("POST", "/reorder", true);
-  	xhttp.setRequestHeader("Content-Type", "application/json");
-  	xhttp.send(JSON.stringify(object));
+    // let xhttp = new XMLHttpRequest();
+  	// xhttp.onreadystatechange = function() {
+  	// 	if(this.readyState==4){
+    //         if(this.status==200){
+    //         }
+    //         else{
+    //             //alert("There was a problem with the server. Try again.");
+    //             //location.reload();
+    //         }
+  	// 	}
+  	// };
+  	// xhttp.open("POST", "/reorder", true);
+  	// xhttp.setRequestHeader("Content-Type", "application/json");
+  	// xhttp.send(JSON.stringify(object));
 }
 
 function deleteImage(){
@@ -170,7 +172,7 @@ function searchPhotoForFaces(){
                 modal.show();
             }
             else{
-                alert("There was a problem with the server. Try again.");
+                alert(this.responseText);
                 location.reload();
             }
   		}

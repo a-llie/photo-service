@@ -26,7 +26,11 @@ function User_FindFacesInPhoto(req,res,next)
     python.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
     // send data to browser
-    console.log(response);
+    if (response === "[]" || response === undefined || response === "" || response === null)
+    {
+        res.status(404).send("No faces found");
+        return;
+    }
 
     response = response.replace(/'/gm, '"');
     response = JSON.parse(response);
@@ -59,11 +63,12 @@ function User_FindPhotosOfPerson(req,res,next)
         console.log(`child process exited with code ${code}`);
         console.log(response);
         // send data to browser
-        if (response === "[]" || response === undefined)
+        if (response === "[]" || response === undefined || response === "" || response === null)
         {
             res.status(404).send("No photos found");
             return;
         }
+    
         response = response.replace(/'/gm, '"');
         response = JSON.parse(response);
         AddImagesToAlbum(req.query.albumName, response);
@@ -138,12 +143,6 @@ function User_Login(req,res,next)
 
 function User_CreateNewAlbum(req,res,next)
 {
-    // if (!req.session.loggedin) 
-    // {
-    //     res.redirect("/login");
-    //     return;
-    // }
-    //options: "album created, album already exists"
     if (req.body.albumName == null) 
     { 
         renderError(req,res,next, "No album name provided", 404);
@@ -188,11 +187,6 @@ function User_ChangeAlbumName(req,res,next)
 
 async function User_AddImagesToAlbum(req,res,next)
 {
-    // if (!req.session.loggedin)
-    // {
-    //     res.redirect("/login");
-    //     return;
-    // }
     if (req.body.albumName == null) 
     { 
         renderError(req,res,next, "No album provided", 404);
@@ -216,11 +210,6 @@ async function User_AddImagesToAlbum(req,res,next)
 
 function User_FindDuplicates(req,res,next)
 {
-    // if (!req.session.loggedin)
-    // {
-    //     res.redirect("/login");
-    //     return;
-    // }
     if (req.params.albumName == null) 
     { 
         renderError(req,res,next, "No album name provided", 404);
@@ -266,11 +255,6 @@ function User_FindDuplicates(req,res,next)
 
 function User_DeleteImages(req,res,next)
 {
-    // if (!req.session.loggedin)
-    // {
-    //     res.redirect("/login");
-    //     return;
-    // }
     if (req.body.albumName == null) 
     { 
         renderError(req,res,next, "No album name provided", 404);
@@ -288,8 +272,8 @@ function User_DeleteImages(req,res,next)
 
 function User_ReorderImages(req,res,next)
 {
-    console.log(JSON.parse(req.body.images));
-    console.log(JSON.parse(req.body.albumName));
+    console.log(req.body.images);
+    console.log(req.body.albumName);
 
 
     res.status(200).send("Images Reordered");
@@ -303,13 +287,11 @@ function images_delete_response(req,res,next)
 function render_login(req,res,next)
 {
     res.status(200).render("login.pug");
-    next();
 }
 
 function render_homepage(req,res,next)
 {
     res.status(200).render("index.pug");
-    next();
 }
 
 function render_dashboard(req,res,next)
