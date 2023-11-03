@@ -1,7 +1,28 @@
 doctype html
-html(lang="en")
-	head
-		meta(charset="UTF-8")
-		meta(name="viewport", content="width=device-width, initial-scale=1.0")
-		link(rel="stylesheet", href="login.css")
-		title Login
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  link(rel='stylesheet' href='login.css')
+  title Login
+.login-form
+  .titlebar
+    | Welcome back!
+  .description
+    | Login below or&nbsp;
+    a.sign-up-link(href='/')
+      | create an account
+  .form-label(id='#email-lbl')
+    | Email
+  .text-input-box(id='#email')
+    input.text-input-field(type='text' required='')
+  .form-label(id='#password-lbl')
+    | Password
+  .text-input-box(id='#password')
+    input.text-input-field(type='password' required='')
+    img(src='eye.svg' alt='eye')
+  a(href='/dashboard')
+    .sign-in-button
+      .button-label
+        | Sign In
+  .forgot-password-link
+    | Forgot Password
