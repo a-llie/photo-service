@@ -76,13 +76,9 @@ section#Titlebar
         .container-fluid
           .input-group.mb-3
             p
-              | Invite a friend to collaborate and view this album by copying the link or inputting
-              | their email address. They&apos;ll be able to use their own gallery of photos to add to this
-              | album. 
+              | Welcome to the Share Options modal! Here, you can manage how you'd like to share your photo album. Collaborate with others by inviting them via email, copy the album link for quick sharing, download the album as a ZIP file to keep it offline, or visit the purchase page for premium features.
               br
               br
-              |  Want some extra ways to show off your perfect album? You can share this
-              |                                 album by downloading the photos or by purchasing a formatted real-life copy.
             input.form-control(type='text' placeholder="Recipient's email address" aria-label="Recipient's email address" aria-describedby='button-emailaddress')
             button#button-emailaddress.btn.btn-outline-dark(type='button' onclick='inviteSent()') Invite
           .input-group.mb-3
@@ -101,12 +97,10 @@ section#Titlebar
       .modal-body
         .container-fluid
           p
-            | You can remove duplicates or similar looking pictures from your album using this feature!
-            | The slider below tells us how similar you want a photo to look for it to be considered a
-            | duplicate. 
+            | Welcome to the Remove Duplicates modal! With this feature, you can declutter your album by removing duplicates or similar-looking pictures. 
+            br 
             br
-            br
-            |  A value of 100% means only identical photos will be removed.
+            | Use the slider below to set the similarity threshold. A value of 100% ensures only identical photos will be removed.
           label.form-label(for='similiaritythreshold') Similarity Threshold
           .range
           form(action="/duplicates/" + albumName method="POST")
@@ -126,11 +120,7 @@ section#Titlebar
       .modal-body
         .container-fluid
           p
-            | Choose a face from this photo.
-            br
-            br
-            |  Select the person you want to add photos to this
-            |                             album of from your gallery.
+            | Welcome to the Scan and Find Faces modal! This facial match feature scans your photos to detect faces. You then select which specific face you want to use for facial matching. Once chosen, our system will run facial matching on all photos in your gallery, automatically adding matching photos to your album. Use this feature to add all photos containing a specific person to this album!
         #displayFacesSelection
           .photo(onclick='handleFaceSelection(this)')
             img(src='' hidden=true)

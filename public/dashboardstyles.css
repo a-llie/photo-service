@@ -46,6 +46,8 @@ background-color: white;
 .dashboard{
     display: flex;
     width: 100%;
+    border-bottom: 2px solid var(--wf-base-800, #2D3648);
+
 }
 
 .BlackButton{
@@ -111,7 +113,6 @@ h1{
 }
 
 .dashboardcontentbuttons{
-    margin-top: 21px;
     float:right;
 }
 
@@ -207,7 +208,6 @@ border: 1px solid var(--Secondary, #9BA5B7);
 }
 
 .nav-item{
-    border-radius: 6px;
     border: 2px solid black;
     margin: 2px;
     }
@@ -218,7 +218,7 @@ border: 1px solid var(--Secondary, #9BA5B7);
     margin-left: 0px;
     margin-right: 0px;
     width: 100%;
-    max-width: 1900px!important;
+    max-width: 2500px!important;
     border-bottom: 3px solid #545F71;
     padding-top: 1rem;
 
@@ -231,4 +231,13 @@ border: 1px solid var(--Secondary, #9BA5B7);
 
 details{
     float: left;
+}
+
+.headericon{
+    margin-right: 1rem;
+}
+
+#sidebarlinks{
+    margin-bottom: 100%!important;
+
 }

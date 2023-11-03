@@ -106,8 +106,10 @@ text-align: center;
 }
 
 .testimonial-img{
-width: 70%;
+width: 30%;
 margin: 30px 20px;
+border-radius: 5%;
+border: 1px solid white;
 }
 
 /* Carousel */
@@ -176,4 +178,8 @@ color: white!important;
 .whatweoffer-column i {
 padding-bottom: 15px;
 color:#ef8172
+}
+
+.WhiteButton a{
+  color: black;
 }
